@@ -287,7 +287,7 @@ Transform:
   m_GameObject: {fileID: 123486388}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.39, y: 2.1, z: -43.97}
+  m_LocalPosition: {x: 9.18, y: 1, z: -8.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,13 +393,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.5735764, z: 0, w: 0.8191521}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 70, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3304,6 +3304,8 @@ GameObject:
   - component: {fileID: 6429402082838189998}
   - component: {fileID: 4891107999064312581}
   - component: {fileID: 7391381795713099210}
+  - component: {fileID: 7391381795713099212}
+  - component: {fileID: 7391381795713099211}
   m_Layer: 0
   m_Name: MacetaSimple
   m_TagString: Untagged
@@ -7594,6 +7596,38 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.011171484, y: 0.011171512, z: 0.0111910775}
   m_Center: {x: 0.0062313806, y: 0.0060788346, z: 0.0055955383}
+--- !u!114 &7391381795713099211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2984499081074565883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2236ba6b8bf7a04db666f7fca2cd447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &7391381795713099212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2984499081074565883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f69a947450f8847ac64c169a725cc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 123486388}
+  alcanceRecogida: 2
 --- !u!4 &7412665936639934497
 Transform:
   m_ObjectHideFlags: 0
