@@ -53,6 +53,10 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 [sourceFiles]
 Assets/
  Modelos/PlayerMovement.cs
+ Scripts/Decoracion/
+  AnimacionJugar.cs
+  VentanaAnimada.cs
+  VentanaAnimadaMenu.cs
  Scripts/
   ObjectPicker.cs
   Outline.cs
