@@ -13,6 +13,7 @@ public class ObjectPicker : MonoBehaviour
     {
         lineado = gameObject.GetComponent<Outline>();
         lineado.enabled = false;
+        player = GameObject.FindObjectOfType<PlayerController>().gameObject;
     }
 
     // Update is called once per frame
