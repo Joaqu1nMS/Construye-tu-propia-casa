@@ -52,18 +52,22 @@ public class ObjectManager : MonoBehaviour
         }
 
         // Desactivar ObjectPicker del resto
-        for (int i = cantidadActivos; i < pickeables.Count; i++)
+        if (cantidadActivos != -1)
         {
-            ObjectPicker op = pickeables[i].GetComponent<ObjectPicker>();
-            Outline ou = pickeables[i].GetComponent<Outline>();
-
-            if (op != null)
+            for (int i = cantidadActivos; i < pickeables.Count; i++)
             {
-                op.enabled = false;                
-                ou.enabled = false;
-            }
-        }
+                ObjectPicker op = pickeables[i].GetComponent<ObjectPicker>();
+                Outline ou = pickeables[i].GetComponent<Outline>();
 
+                if (op != null)
+                {
+                    op.enabled = false;                
+                    ou.enabled = false;
+                }
+            }
+        }        
+
+        // Crear la UI
         foreach (GameObject activo in pickeables.Where(x => x.GetComponent<ObjectPicker>().enabled))
         {
             GameObject txt = Instantiate(prefabTexto, Vector2.zero, Quaternion.identity, notas.transform);
