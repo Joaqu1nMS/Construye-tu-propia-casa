@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class AnimacionJugar : MonoBehaviour
@@ -13,13 +14,13 @@ public class AnimacionJugar : MonoBehaviour
 
     void Start()
     {
-        LanzarAnimacion();
+
     }
 
     public void LanzarAnimacion()
     {
         StartCoroutine(MoverCamara(duracion + 1));
-        StartCoroutine(Animacion());        
+        StartCoroutine(Animacion());
     }
 
     private IEnumerator MoverCamara(float tiempo)
@@ -37,25 +38,32 @@ public class AnimacionJugar : MonoBehaviour
         }
 
         camara.transform.position = destino; // asegurar posición final exacta
+        CargarJuego();
+    }
+
+    private void CargarJuego()
+    {
+        SceneManager.LoadScene(2);
+        GameManager.gameM?.CambiarCancion(1);
     }
 
     private IEnumerator Animacion()
     {
-        yield return new WaitForSeconds(duracion * 1/5);
+        yield return new WaitForSeconds(duracion * 1 / 5);
 
         foreach (VentanaAnimada v in cuarto.GetComponentsInChildren<VentanaAnimada>())
         {
             v.TurnOn();
         }
 
-        yield return new WaitForSeconds(duracion * 2/5);
+        yield return new WaitForSeconds(duracion * 2 / 5);
 
         foreach (VentanaAnimada v in salon.GetComponentsInChildren<VentanaAnimada>())
         {
             v.TurnOff();
         }
 
-        yield return new WaitForSeconds(duracion * 2/5);
+        yield return new WaitForSeconds(duracion * 2 / 5);
 
         foreach (VentanaAnimada v in cuarto.GetComponentsInChildren<VentanaAnimada>())
         {
