@@ -4,6 +4,7 @@
 //
 //  Created by Chris Nolet on 3/30/18.
 //  Copyright © 2018 Chris Nolet. All rights reserved.
+//  Optimized to prevent OnEnable material allocation spikes.
 //
 
 using System;
@@ -95,14 +96,9 @@ public class Outline : MonoBehaviour {
     // Retrieve or generate smooth normals
     LoadSmoothNormals();
 
-    // Apply material properties immediately
-    needsUpdate = true;
-  }
-
-  void OnEnable() {
+    // OPTIMIZACIÓN: Añadimos los materiales al renderizador en el Awake
+    // para que la tarjeta gráfica compile el shader al cargar la escena, y no al pasar el ratón.
     foreach (var renderer in renderers) {
-
-      // Append outline shaders
       var materials = renderer.sharedMaterials.ToList();
 
       materials.Add(outlineMaskMaterial);
@@ -110,6 +106,14 @@ public class Outline : MonoBehaviour {
 
       renderer.materials = materials.ToArray();
     }
+
+    // Aplicar las propiedades y el grosor inicial
+    UpdateMaterialProperties();
+  }
+
+  void OnEnable() {
+    // Al activar el script, marcamos que necesitamos actualizar (para restaurar el grosor original)
+    needsUpdate = true;
   }
 
   void OnValidate() {
@@ -132,13 +136,21 @@ public class Outline : MonoBehaviour {
   void Update() {
     if (needsUpdate) {
       needsUpdate = false;
-
       UpdateMaterialProperties();
     }
   }
 
   void OnDisable() {
+    // OPTIMIZACIÓN: Cuando se desactiva el script, en lugar de borrar el material de memoria,
+    // forzamos a que el shader ponga su grosor a 0 instantáneamente.
+    UpdateMaterialProperties();
+  }
+
+  void OnDestroy() {
+
+    // OPTIMIZACIÓN: Solo eliminamos los materiales de la malla cuando el objeto se destruye.
     foreach (var renderer in renderers) {
+      if (renderer == null) continue;
 
       // Remove outline shaders
       var materials = renderer.sharedMaterials.ToList();
@@ -148,9 +160,6 @@ public class Outline : MonoBehaviour {
 
       renderer.materials = materials.ToArray();
     }
-  }
-
-  void OnDestroy() {
 
     // Destroy material instances
     Destroy(outlineMaskMaterial);
@@ -271,6 +280,10 @@ public class Outline : MonoBehaviour {
 
   void UpdateMaterialProperties() {
 
+    // OPTIMIZACIÓN: Si el script está desactivado en el inspector o por código (enabled = false), 
+    // el grosor real que usaremos será 0. Si está activado, usamos el outlineWidth seleccionado.
+    float actualWidth = isActiveAndEnabled ? outlineWidth : 0f;
+
     // Apply properties according to mode
     outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
 
@@ -278,25 +291,25 @@ public class Outline : MonoBehaviour {
       case Mode.OutlineAll:
         outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
         outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
-        outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
+        outlineFillMaterial.SetFloat("_OutlineWidth", actualWidth);
         break;
 
       case Mode.OutlineVisible:
         outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
         outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
-        outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
+        outlineFillMaterial.SetFloat("_OutlineWidth", actualWidth);
         break;
 
       case Mode.OutlineHidden:
         outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
         outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Greater);
-        outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
+        outlineFillMaterial.SetFloat("_OutlineWidth", actualWidth);
         break;
 
       case Mode.OutlineAndSilhouette:
         outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
         outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
-        outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
+        outlineFillMaterial.SetFloat("_OutlineWidth", actualWidth);
         break;
 
       case Mode.SilhouetteOnly:
