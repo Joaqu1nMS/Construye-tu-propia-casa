@@ -31,6 +31,8 @@ public class ObjectManager : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return; 
+        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (!canvasActivo) canvasActivo = true;

@@ -75,6 +75,10 @@ public class DoorInteraction : MonoBehaviour
         SetLabelActivo(false);
     }
 
+    void Update(){
+        if (Time.timeScale == 0f) return; 
+    }
+
     // ══════════════════════════════════════════════════════════
     //  OnMouse* — Unity los llama automáticamente cuando el
     //  cursor pasa sobre el Collider de este GameObject
@@ -83,6 +87,7 @@ public class DoorInteraction : MonoBehaviour
     /// Cursor entra en el Collider
     void OnMouseEnter()
     {
+        if (Time.timeScale == 0f) return; 
         if (estaAnimando) return;
 
         mouseEncima = true;
@@ -102,6 +107,7 @@ public class DoorInteraction : MonoBehaviour
     /// Cursor está sobre el Collider — detectamos la tecla E aquí
     void OnMouseOver()
     {
+        if (Time.timeScale == 0f) return; 
         if (estaAnimando) return;
 
         if (Input.GetKeyDown(KeyCode.E))

@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Update()
-    {
+    {  
         // Resetear datos
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.B))
         {

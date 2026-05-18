@@ -17,6 +17,12 @@ public class ObjectPicker : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerController>().gameObject;
     }
 
+    void Update()
+    {
+        if (Time.timeScale == 0f) return; 
+        
+    }
+
     // Update is called once per frame
     private void OnMouseOver()
     {        

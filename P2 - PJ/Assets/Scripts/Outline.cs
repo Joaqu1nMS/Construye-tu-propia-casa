@@ -134,6 +134,9 @@ public class Outline : MonoBehaviour {
   }
 
   void Update() {
+
+    if (Time.timeScale == 0f) return; 
+    
     if (needsUpdate) {
       needsUpdate = false;
       UpdateMaterialProperties();

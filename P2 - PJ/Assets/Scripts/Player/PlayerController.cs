@@ -89,6 +89,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0f)
+        {
+            crosshairRadius = 0f; // Hide crosshair when paused
+            return;
+        } 
         HandleMouseLook();
         HandleCrouch();
         HandleMovement();
