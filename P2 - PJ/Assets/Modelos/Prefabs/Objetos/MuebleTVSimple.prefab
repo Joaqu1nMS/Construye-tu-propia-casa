@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   alcanceRecogida: 2
+  nombreDescripcion: Un libro naranja que huela a altavoz seria genial
 --- !u!114 &6140037522163478171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   alcanceRecogida: 2
+  nombreDescripcion: Me encantan los libros verdes al ver la tele
 --- !u!114 &5111660386687284972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,6 +752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   alcanceRecogida: 2
+  nombreDescripcion: 
 --- !u!114 &8959140048227306073
 MonoBehaviour:
   m_ObjectHideFlags: 0
