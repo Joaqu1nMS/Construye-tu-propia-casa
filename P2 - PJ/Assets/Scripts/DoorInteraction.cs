@@ -50,6 +50,11 @@ public class DoorInteraction : MonoBehaviour
     public string textoCerrada = "Presiona E para abrir";
     public string textoAbierta = "Presiona E para cerrar";
 
+    //rango
+    public float rango   = 3f;
+    public GameObject player;
+
+
     // ─── ANIMACIÓN ────────────────────────────────────────────
     [Header("Animación")]
     public float anguloCerrada  = 0f;
@@ -65,6 +70,8 @@ public class DoorInteraction : MonoBehaviour
     // ══════════════════════════════════════════════════════════
     void Awake()
     {
+        player = GameObject.FindObjectOfType<PlayerController>().gameObject;
+
         outline = GetComponent<Outline>();
 
         if (doorCollider == null) doorCollider = GetComponent<Collider>();
@@ -85,7 +92,8 @@ public class DoorInteraction : MonoBehaviour
     // ══════════════════════════════════════════════════════════
 
     /// Cursor entra en el Collider
-    void OnMouseEnter()
+    
+    /*void OnMouseEnter()
     {
         if (Time.timeScale == 0f) return; 
         if (estaAnimando) return;
@@ -94,7 +102,7 @@ public class DoorInteraction : MonoBehaviour
         ActualizarTextoLabel();
         SetLabelActivo(true);
         SetOutlineActivo(true);
-    }
+    }*/
 
     /// Cursor sale del Collider
     void OnMouseExit()
@@ -106,8 +114,24 @@ public class DoorInteraction : MonoBehaviour
 
     /// Cursor está sobre el Collider — detectamos la tecla E aquí
     void OnMouseOver()
-    {
+    {   
         if (Time.timeScale == 0f) return; 
+
+        if (Vector3.Distance(player.transform.position, transform.position) > rango)
+        {
+            // Si el jugador está fuera de rango, no mostrar UI ni permitir interacción
+            SetLabelActivo(false);
+            SetOutlineActivo(false);
+            return;
+        }
+        else
+        {
+            mouseEncima = true;
+            ActualizarTextoLabel();
+            SetLabelActivo(true);
+            SetOutlineActivo(true);
+        }
+
         if (estaAnimando) return;
 
         if (Input.GetKeyDown(KeyCode.E))

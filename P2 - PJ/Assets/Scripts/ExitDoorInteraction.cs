@@ -33,6 +33,7 @@ public class ExitDoorInteraction : MonoBehaviour
     [Header("Managers")]
     public ObjectManager objectManager;
     public Cronometro cronometro;
+    public GameObject menuWin;
 
     // ─── LABEL ────────────────────────────────────────────────
     [Header("Label UI (World Space Canvas)")]
@@ -59,6 +60,7 @@ public class ExitDoorInteraction : MonoBehaviour
     void Awake()
     {
         outline = GetComponent<Outline>();
+        menuWin.SetActive(false);
 
         if (objectManager == null) objectManager = FindObjectOfType<ObjectManager>();
         if (cronometro == null) cronometro = FindObjectOfType<Cronometro>();
@@ -111,6 +113,11 @@ public class ExitDoorInteraction : MonoBehaviour
     {
         estaAnimando = true;
 
+        // Pausar y dejar que Cronometro gestione el ranking y el panel
+
+        if (cronometro != null)
+            cronometro.DetenerYComprobarRecord();
+
         // Fade a negro
         if (fadeImage != null)
         {
@@ -131,18 +138,14 @@ public class ExitDoorInteraction : MonoBehaviour
             yield return new WaitForSeconds(duracionFade);
         }
 
-        // Pausar y dejar que Cronometro gestione el ranking y el panel
-        Time.timeScale = 0f;
-
-        if (cronometro != null)
-            cronometro.DetenerYComprobarRecord();
-
+        menuWin.SetActive(true);
+        
         estaAnimando = false;
     }
 
     // ══════════════════════════════════════════════════════════
     //  HELPERS
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════
     void ActualizarTexto()
     {
         if (labelText == null) return;

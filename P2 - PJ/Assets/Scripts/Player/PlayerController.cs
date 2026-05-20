@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
             crosshairRadius = 0f; // Hide crosshair when paused
             return;
         } 
+        crosshairRadius = 4f; 
         HandleMouseLook();
         HandleCrouch();
         HandleMovement();
