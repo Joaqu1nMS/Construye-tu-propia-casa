@@ -2,12 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TipoOBjeto
+{
+    LibrosSalon,
+    LamparasDePie,    
+    Vinilos,
+    Macetas,
+    Altavoces,
+    Unico
+}
+
 public class ObjectPicker : MonoBehaviour
 {
     private Outline lineado;
     [SerializeField] private GameObject player;
     [SerializeField] private float alcanceRecogida = 2f;
     public string nombreDescripcion;
+    public TipoOBjeto tipo;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +26,10 @@ public class ObjectPicker : MonoBehaviour
         lineado = gameObject.GetComponent<Outline>();
         lineado.enabled = false;
         player = GameObject.FindObjectOfType<PlayerController>().gameObject;
+        if (nombreDescripcion.Equals(""))
+        {
+            nombreDescripcion = gameObject.name;
+        }
     }
 
     void Update()
