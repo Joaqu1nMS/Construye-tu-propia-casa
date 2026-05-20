@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     //  Inspector Settings
     // ──────────────────────────────────────────────
 
+    public enum MoveState { Idle, Walk, Run, Crouch }
+    public MoveState CurrentMoveState { get; private set; }
+
     [Header("References")]
     [Tooltip("Assign the child Camera used as the player's eyes.")]
     public Camera playerCamera;
@@ -93,8 +96,8 @@ public class PlayerController : MonoBehaviour
         {
             crosshairRadius = 0f; // Hide crosshair when paused
             return;
-        } 
-        crosshairRadius = 4f; 
+        }
+        crosshairRadius = 4f;
         HandleMouseLook();
         HandleCrouch();
         HandleMovement();
@@ -127,15 +130,13 @@ public class PlayerController : MonoBehaviour
         bool grounded = _cc.isGrounded;
 
         if (grounded && _velocity.y < 0f)
-            _velocity.y = -2f; // Small negative to keep grounded
+            _velocity.y = -2f;
 
-        // WASD input (relative to player facing direction)
-        float horizontal = Input.GetAxis("Horizontal"); // A / D
-        float vertical   = Input.GetAxis("Vertical");   // W / S
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
 
-        // Sprint: hold Left or Right Ctrl (disabled while crouching)
         _isSprinting = !_isCrouching &&
                        (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
 
@@ -143,14 +144,26 @@ public class PlayerController : MonoBehaviour
         _velocity.x = move.x * currentSpeed;
         _velocity.z = move.z * currentSpeed;
 
-        // Jump
         if (Input.GetButtonDown("Jump") && grounded && !_isCrouching)
             _velocity.y = jumpForce;
 
-        // Gravity
         _velocity.y -= gravity * Time.deltaTime;
 
         _cc.Move(_velocity * Time.deltaTime);
+
+        // 2. AÑADE ESTO AL FINAL DE HandleMovement: Calculamos el estado actual
+        if (_isCrouching)
+        {
+            CurrentMoveState = MoveState.Crouch;
+        }
+        else if (horizontal != 0 || vertical != 0) // Si se está moviendo
+        {
+            CurrentMoveState = _isSprinting ? MoveState.Run : MoveState.Walk;
+        }
+        else
+        {
+            CurrentMoveState = MoveState.Idle;
+        }
     }
 
     // ──────────────────────────────────────────────
@@ -217,7 +230,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnGUI()
     {
-        float cx = Screen.width  * 0.5f;
+        float cx = Screen.width * 0.5f;
         float cy = Screen.height * 0.5f;
         float diameter = crosshairRadius * 2f;
 
