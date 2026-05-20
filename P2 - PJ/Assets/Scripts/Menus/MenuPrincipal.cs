@@ -11,6 +11,9 @@ public class MenuPrincipal : MonoBehaviour
     [SerializeField] private Button botonJugar;
     [SerializeField] private AnimacionJugar animJugar;
     private bool toggleJugar = false;
+    //ranking
+    [SerializeField] private Button botonRanking;
+
     // Opciones
     [SerializeField] private Button botonOpciones;
     [SerializeField] private GameObject canvasOpciones;
@@ -27,6 +30,8 @@ public class MenuPrincipal : MonoBehaviour
 
         botonOpciones.onClick.AddListener(() => MostrarOpciones());
 
+        botonRanking.onClick.AddListener(() => MostrarRanking());
+
         botonSalir.onClick.AddListener(() => Salir());
     }
 
@@ -39,6 +44,7 @@ public class MenuPrincipal : MonoBehaviour
     private void ToggleJugar()
     {
         botonJugar.gameObject.SetActive(false);
+        botonRanking.gameObject.SetActive(false);
         botonOpciones.gameObject.SetActive(false);
         botonSalir.gameObject.SetActive(false);
 
@@ -47,17 +53,9 @@ public class MenuPrincipal : MonoBehaviour
         animJugar.LanzarAnimacion();
     }
 
-    private void MostrarRankingIndividual(GameObject columnaActiva)
+    private void MostrarRanking()
     {
         GameManager.gameM?.BotonPresionadoSFX();
-
-        // 2. Encendemos únicamente la que pasamos por parámetro
-        if (columnaActiva != null)
-        {
-            columnaActiva.SetActive(true);
-        }
-
-        // 3. Abrimos el canvas de Ranking
         canvasRanking.SetActive(true);
     }
 
