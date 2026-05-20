@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5064411663356862860}
   - component: {fileID: 2310872230228878854}
   - component: {fileID: 4713850342520527625}
-  - component: {fileID: 8684433709726776370}
+  - component: {fileID: 7296117557936346042}
   m_Layer: 0
   m_Name: CamaSimple
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8684433709726776370
-BoxCollider:
+--- !u!64 &7296117557936346042
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,6 +103,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.4456148, y: 3.179228, z: 5.6654534}
-  m_Center: {x: -2.0369794, y: 1.5896171, z: -3.1861727}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -281134378750041997, guid: 111c84a1b17520d4fbd86ad93c6c7932, type: 3}
