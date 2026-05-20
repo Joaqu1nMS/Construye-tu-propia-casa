@@ -3,17 +3,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-/// ============================================================
-///  ObjectManager.cs  —  Modificado para soportar ExitDoor
-/// ============================================================
-///  Cambios respecto al original:
-///    • Lleva la cuenta de objetos recogidos (objetosRecogidos).
-///    • Expone TodosRecogidos() → bool
-///    • Expone ObjetosRecogidos() → int
-///    • Expone ObjetosTotal() → int
-///    • HeSidoRecogido() incrementa el contador interno.
-/// ============================================================
-
 public class ObjectManager : MonoBehaviour
 {
     List<GameObject> pickeables = new List<GameObject>();
@@ -27,12 +16,10 @@ public class ObjectManager : MonoBehaviour
     private bool canvasActivo = false;
     public GameObject notas;
     public GameObject prefabTexto;
-
-    // ─── Contador interno ──────────────────────────────────────
+    
     private int objetosRecogidos = 0;   // cuántos se han cogido ya
     private int objetosTotal = 0;   // cuántos había que coger
-
-    // ══════════════════════════════════════════════════════════
+    
     void Start()
     {
         foreach (ObjectPicker obj in FindObjectsOfType<ObjectPicker>())
@@ -52,8 +39,7 @@ public class ObjectManager : MonoBehaviour
             canvasLista.SetActive(canvasActivo);
         }
     }
-
-    // ══════════════════════════════════════════════════════════
+    
     void SeleccionarObjetos()
     {
         // Mezclar aleatoriamente
@@ -65,23 +51,47 @@ public class ObjectManager : MonoBehaviour
             pickeables[randomIndex] = temp;
         }
 
-        // Desactivar los que sobran
-        if (cantidadActivos != -1)
+        // Seleccionar cuáles quedan activos respetando la regla de unicidad
+        HashSet<TipoOBjeto> tiposYaElegidos = new HashSet<TipoOBjeto>();
+        List<GameObject> seleccionados = new List<GameObject>();
+
+        foreach (GameObject obj in pickeables)
         {
-            for (int i = cantidadActivos; i < pickeables.Count; i++)
+            if (cantidadActivos != -1 && seleccionados.Count >= cantidadActivos) break;
+
+            ObjectPicker op = obj.GetComponent<ObjectPicker>();
+            if (op == null) continue;
+
+            // Si no es Unico y ya cogimos uno de ese tipo, descartarlo
+            if (op.tipo != TipoOBjeto.Unico && tiposYaElegidos.Contains(op.tipo))
             {
-                ObjectPicker op = pickeables[i].GetComponent<ObjectPicker>();
-                Outline ou = pickeables[i].GetComponent<Outline>();
-                if (op != null) { op.enabled = false; }
-                if (ou != null) { ou.enabled = false; }
+                op.enabled = false;
+                Outline ou = obj.GetComponent<Outline>();
+                if (ou != null) ou.enabled = false;
+                continue;
             }
+
+            // Aceptar el objeto
+            seleccionados.Add(obj);
+            if (op.tipo != TipoOBjeto.Unico)
+                tiposYaElegidos.Add(op.tipo);
+        }
+
+        // Desactivar los que no fueron seleccionados
+        foreach (GameObject obj in pickeables)
+        {
+            if (seleccionados.Contains(obj)) continue;
+
+            ObjectPicker op = obj.GetComponent<ObjectPicker>();
+            Outline ou = obj.GetComponent<Outline>();
+            if (op != null) op.enabled = false;
+            if (ou != null) ou.enabled = false;
         }
 
         // Crear UI y contar total
-        var activos = pickeables.Where(x => x.GetComponent<ObjectPicker>().enabled).ToList();
-        objetosTotal = activos.Count;
+        objetosTotal = seleccionados.Count;
 
-        foreach (GameObject activo in activos)
+        foreach (GameObject activo in seleccionados)
         {
             GameObject txt = Instantiate(prefabTexto, Vector2.zero, Quaternion.identity, notas.transform);
             txt.GetComponent<TextMeshProUGUI>().text = activo.GetComponent<ObjectPicker>().nombreDescripcion;
@@ -89,9 +99,6 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    // ══════════════════════════════════════════════════════════
-    //  Llamado por ObjectPicker cuando se recoge un objeto
-    // ══════════════════════════════════════════════════════════
     public void HeSidoRecogido(string text)
     {
         GameObject obj = objetosTXT.FirstOrDefault(
@@ -100,20 +107,13 @@ public class ObjectManager : MonoBehaviour
         if (obj != null)
         {
             obj.GetComponent<TextMeshProUGUI>().fontStyle = TMPro.FontStyles.Strikethrough;
-            objetosRecogidos++;   // ← NUEVO: incrementar contador
+            objetosRecogidos++;
         }
     }
+    
+    // HELPERS
 
-    // ══════════════════════════════════════════════════════════
-    //  API pública para ExitDoorInteraction y MenuWin
-    // ══════════════════════════════════════════════════════════
-
-    /// <summary>Devuelve true cuando el jugador ha recogido todos los objetos requeridos.</summary>
     public bool TodosRecogidos() => objetosRecogidos >= objetosTotal && objetosTotal > 0;
-
-    /// <summary>Cuántos objetos ha recogido el jugador hasta ahora.</summary>
-    public int ObjetosRecogidos() => objetosRecogidos;
-
-    /// <summary>Total de objetos que hay que recoger en esta partida.</summary>
+    public int ObjetosRecogidos() => objetosRecogidos;    
     public int ObjetosTotal() => objetosTotal;
 }

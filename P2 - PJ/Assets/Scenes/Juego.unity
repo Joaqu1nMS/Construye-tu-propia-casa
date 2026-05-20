@@ -664,6 +664,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8329675992423774669, guid: 92f1ca1da7412494794c66cf79330936,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8329675992423774669, guid: 92f1ca1da7412494794c66cf79330936,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Las pesadillas tienen v\xEDa libre"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -936,9 +946,6 @@ GameObject:
   - component: {fileID: 99310025}
   - component: {fileID: 99310030}
   - component: {fileID: 99310029}
-  - component: {fileID: 99310028}
-  - component: {fileID: 99310027}
-  - component: {fileID: 99310026}
   m_Layer: 0
   m_Name: Blurryface (1)
   m_TagString: Untagged
@@ -961,60 +968,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1353370320}
   m_LocalEulerAnglesHint: {x: 6.7, y: 90, z: -90}
---- !u!65 &99310026
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99310024}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.69347787, y: 0.040168043, z: 0.6934812}
-  m_Center: {x: 0.0000011920936, y: 0.0000009536743, z: 0.00000011920937}
---- !u!114 &99310027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99310024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2236ba6b8bf7a04db666f7fca2cd447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &99310028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99310024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9f69a947450f8847ac64c169a725cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  alcanceRecogida: 2
-  nombreDescripcion: 
 --- !u!23 &99310029
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2049,6 +2002,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5287956250708131041, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Suele leer en el sofa
+      objectReference: {fileID: 0}
     - target: {fileID: 5833266251540783886, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -2073,6 +2031,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7773780664803705993, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Suele leer en el sofa
+      objectReference: {fileID: 0}
+    - target: {fileID: 9168259401206182140, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9168259401206182140, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
+      propertyPath: alcanceRecogida
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9168259401206182140, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Fin a las malas noticias
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2508,6 +2486,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
+        type: 3}
+      propertyPath: tipo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Ya tiene ventanas el salon para ver
+      objectReference: {fileID: 0}
     - target: {fileID: 1730916258705841476, guid: 429613986f3ea874d9f9b0ec96588c06,
         type: 3}
       propertyPath: m_Name
@@ -2769,6 +2757,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: tipo
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Bonita maceta la del sal\xF3n"
+      objectReference: {fileID: 0}
     - target: {fileID: 1597615940707358494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2906,6 +2904,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263908663434255960, guid: 00feb492a9700c4409f92afebac9d1be,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263908663434255960, guid: 00feb492a9700c4409f92afebac9d1be,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Necesito algo para hacer palomitas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3468,7 +3476,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   alcanceRecogida: 2
-  nombreDescripcion: 
+  nombreDescripcion: "No mas caf\xE9 por la ma\xF1ana"
+  tipo: 5
 --- !u!65 &493311640
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3541,89 +3550,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493311636}
   m_Mesh: {fileID: 3562819211892569702, guid: 111c84a1b17520d4fbd86ad93c6c7932, type: 3}
---- !u!1001 &507950423
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1353370320}
-    m_Modifications:
-    - target: {fileID: 2584629116650151201, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_Name
-      value: MesillaSimple
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.322769
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.8491989
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -12.987387
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 92f1ca1da7412494794c66cf79330936, type: 3}
 --- !u!1 &520451923
 GameObject:
   m_ObjectHideFlags: 0
@@ -4842,7 +4768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3978cabff9f784c984a7b96520ee3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cantidadActivos: 1
+  cantidadActivos: 20
   canvasLista: {fileID: 1381465481}
   notas: {fileID: 1254874247}
   prefabTexto: {fileID: 6566729113288583742, guid: 25415bb4ecac1c44db7bcb05ee1fa052,
@@ -5009,12 +4935,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 736193090}
   m_CullTransparentMesh: 1
---- !u!4 &739237962 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-    type: 3}
-  m_PrefabInstance: {fileID: 962868426}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &758106792
 GameObject:
   m_ObjectHideFlags: 0
@@ -5522,10 +5442,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1763388368665564193, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1763388368665564193, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: alcanceRecogida
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1763388368665564193, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Nunca tomaba apuntes en clase
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100367331491444183, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100367331491444183, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: alcanceRecogida
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100367331491444183, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Jam\xE1s terminar\xE1 su tarea"
+      objectReference: {fileID: 0}
     - target: {fileID: 3199253024860979905, guid: 5de78bd164cebf04aafb3f0f67755b39,
         type: 3}
       propertyPath: m_Name
       value: MesaSimple
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753174495679865030, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753174495679865030, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Sin luz no estudia, con luz tampoco
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5642,6 +5602,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: tipo
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Bonita maceta la del comedor
+      objectReference: {fileID: 0}
     - target: {fileID: 1597615940707358494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6294,84 +6264,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1729884444}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &962868426
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1353370320}
-    m_Modifications:
-    - target: {fileID: 1124564104163854529, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1609360238}
-    - target: {fileID: 1124564104163854529, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: nombreDescripcion
-      value: Papelera Salon
-      objectReference: {fileID: 0}
-    - target: {fileID: 4296096765799268040, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_Name
-      value: PapeleraSimple
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.153168
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.8491993
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -8.552386
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8018905227516313689, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9f3e455d51bfe094dbd708f78b8ca1b5, type: 3}
 --- !u!1 &964557705
 GameObject:
   m_ObjectHideFlags: 0
@@ -7342,6 +7234,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500977326679077884, guid: c99b8bcce97d42a4b8f31f74e1fb2f97,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500977326679077884, guid: c99b8bcce97d42a4b8f31f74e1fb2f97,
+        type: 3}
+      propertyPath: alcanceRecogida
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500977326679077884, guid: c99b8bcce97d42a4b8f31f74e1fb2f97,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "La comida le qued\xF3 sosa"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8551,10 +8458,8 @@ Transform:
   - {fileID: 923324590}
   - {fileID: 172563924}
   - {fileID: 336160357}
-  - {fileID: 739237962}
   - {fileID: 858897151}
   - {fileID: 799424258}
-  - {fileID: 1531485485}
   - {fileID: 45538883}
   - {fileID: 2015052092}
   - {fileID: 393807507}
@@ -9215,7 +9120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1418238302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9796,6 +9701,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 3309814329924922055, guid: 3d9a73767c9580f41a60a46a916a2d7e,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309814329924922055, guid: 3d9a73767c9580f41a60a46a916a2d7e,
+        type: 3}
+      propertyPath: alcanceRecogida
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309814329924922055, guid: 3d9a73767c9580f41a60a46a916a2d7e,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "7 a\xF1os de mala suerte si se me cae"
+      objectReference: {fileID: 0}
     - target: {fileID: 5395772514367288898, guid: 3d9a73767c9580f41a60a46a916a2d7e,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -10061,12 +9981,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523423724}
   m_Mesh: {fileID: 1149627628334100943, guid: 111c84a1b17520d4fbd86ad93c6c7932, type: 3}
---- !u!4 &1531485485 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2630287504438125408, guid: 92f1ca1da7412494794c66cf79330936,
-    type: 3}
-  m_PrefabInstance: {fileID: 507950423}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1533750055
 GameObject:
   m_ObjectHideFlags: 0
@@ -10128,13 +10042,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1124564104163854529, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
         type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124564104163854529, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
+        type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1609360238}
     - target: {fileID: 1124564104163854529, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
         type: 3}
       propertyPath: nombreDescripcion
-      value: Papelera Cocina
+      value: Que tire la basura por la ventana
       objectReference: {fileID: 0}
     - target: {fileID: 4296096765799268040, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
         type: 3}
@@ -10208,6 +10127,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GuitarraE
+      objectReference: {fileID: 0}
+    - target: {fileID: 525452129295838959, guid: 8626c01f7c8dab34fb1903996b859d96,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 525452129295838959, guid: 8626c01f7c8dab34fb1903996b859d96,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Se le acabo la vida de Rockstar
       objectReference: {fileID: 0}
     - target: {fileID: 1369010865925085676, guid: 8626c01f7c8dab34fb1903996b859d96,
         type: 3}
@@ -10963,6 +10892,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1110377607791057333, guid: daf95c50185fda444a2852ebce6f6100,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110377607791057333, guid: daf95c50185fda444a2852ebce6f6100,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Espero que no tenga una urgencia
+      objectReference: {fileID: 0}
+    - target: {fileID: 2499124168860582171, guid: daf95c50185fda444a2852ebce6f6100,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2499124168860582171, guid: daf95c50185fda444a2852ebce6f6100,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Me llevo las toallas, \xBFPorque no?"
+      objectReference: {fileID: 0}
     - target: {fileID: 8626537100558794543, guid: daf95c50185fda444a2852ebce6f6100,
         type: 3}
       propertyPath: m_Name
@@ -11153,6 +11102,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8145648024608155022, guid: d3cc05378d2a54649803677352873cfc,
+        type: 3}
+      propertyPath: tipo
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 9084554183623709229, guid: d3cc05378d2a54649803677352873cfc,
         type: 3}
       propertyPath: m_Name
@@ -11177,6 +11131,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
+        type: 3}
+      propertyPath: tipo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Ya no iluminar\xE1 snacks nocturnos"
+      objectReference: {fileID: 0}
     - target: {fileID: 1730916258705841476, guid: 429613986f3ea874d9f9b0ec96588c06,
         type: 3}
       propertyPath: m_Name
@@ -11384,6 +11348,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 1062469450189967605, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062469450189967605, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Nadie usa ya el tel\xE9fono fijo"
+      objectReference: {fileID: 0}
     - target: {fileID: 2848847134232873435, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
         type: 3}
       propertyPath: m_Name
@@ -11454,7 +11428,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5659462071472139888, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659462071472139888, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Unas flores para mi amada
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7916844437469563584, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 8833878334884248438, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 3803897662208185366, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 8791594158575512734, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 7437331826378963558, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 6794850865948266903, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 3190283805785761989, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 8978952211680957470, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
+    - {fileID: 6194992339942919759, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -12407,6 +12400,8 @@ GameObject:
   - component: {fileID: 1974957059}
   - component: {fileID: 1974957058}
   - component: {fileID: 1974957057}
+  - component: {fileID: 1974957062}
+  - component: {fileID: 1974957061}
   m_Layer: 0
   m_Name: Poster
   m_TagString: Untagged
@@ -12501,6 +12496,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1353370320}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!114 &1974957061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974957056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2236ba6b8bf7a04db666f7fca2cd447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &1974957062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974957056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f69a947450f8847ac64c169a725cc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  alcanceRecogida: 2.5
+  nombreDescripcion: "\xBFPorque tiene un poster ah\xED?"
+  tipo: 5
 --- !u!1 &1996132459
 GameObject:
   m_ObjectHideFlags: 0
@@ -12685,6 +12714,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256261091671957078, guid: 41f0bfe876dd673428d3434069e984bb,
+        type: 3}
+      propertyPath: tipo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256261091671957078, guid: 41f0bfe876dd673428d3434069e984bb,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Ma\xF1ana se va sin desayunar"
       objectReference: {fileID: 0}
     - target: {fileID: 3477413091439242606, guid: 41f0bfe876dd673428d3434069e984bb,
         type: 3}
@@ -12953,6 +12992,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8145648024608155022, guid: d3cc05378d2a54649803677352873cfc,
+        type: 3}
+      propertyPath: tipo
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 9084554183623709229, guid: d3cc05378d2a54649803677352873cfc,
         type: 3}
       propertyPath: m_Name
@@ -12980,9 +13024,6 @@ GameObject:
   - component: {fileID: 2084777715}
   - component: {fileID: 2084777720}
   - component: {fileID: 2084777719}
-  - component: {fileID: 2084777718}
-  - component: {fileID: 2084777717}
-  - component: {fileID: 2084777716}
   m_Layer: 0
   m_Name: Blurryface (3)
   m_TagString: Untagged
@@ -13005,60 +13046,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1353370320}
   m_LocalEulerAnglesHint: {x: 6.7, y: 90, z: -90}
---- !u!65 &2084777716
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084777714}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.69347787, y: 0.040168043, z: 0.6934812}
-  m_Center: {x: 0.0000011920936, y: 0.0000009536743, z: 0.00000011920937}
---- !u!114 &2084777717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084777714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2236ba6b8bf7a04db666f7fca2cd447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &2084777718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084777714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9f69a947450f8847ac64c169a725cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  alcanceRecogida: 2
-  nombreDescripcion: 
 --- !u!23 &2084777719
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13117,6 +13104,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: tipo
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: "Le sobra una maceta en el sal\xF3n"
+      objectReference: {fileID: 0}
     - target: {fileID: 1597615940707358494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13185,6 +13182,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1353370320}
     m_Modifications:
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: tipo
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: nombreDescripcion
+      value: Bonita maceta en la cocina
+      objectReference: {fileID: 0}
     - target: {fileID: 1597615940707358494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13506,8 +13513,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  alcanceRecogida: 2
-  nombreDescripcion: 
+  alcanceRecogida: 3
+  nombreDescripcion: Es su album favorito
+  tipo: 2
 --- !u!23 &2143041384
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20129,7 +20137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   alcanceRecogida: 2
-  nombreDescripcion: 
+  nombreDescripcion: "Ya no podr\xE1 escuchar m\xFAsica"
+  tipo: 5
 --- !u!222 &6192693175187322400
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21607,7 +21616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   alcanceRecogida: 2
-  nombreDescripcion: 
+  nombreDescripcion: "Es el \xFAltimo album que escuch\xF3"
+  tipo: 2
 --- !u!224 &7595408746192765248
 RectTransform:
   m_ObjectHideFlags: 0
