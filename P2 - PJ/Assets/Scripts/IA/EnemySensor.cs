@@ -43,7 +43,7 @@ public class EnemySensor : MonoBehaviour
         if (eyePoint == null) eyePoint = transform;
 
         // Find player — tag-based so no hard scene reference needed
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = FindObjectOfType<PlayerController>().gameObject;
         if (player != null)
         {
             _playerTransform = player.transform;
@@ -75,28 +75,52 @@ public class EnemySensor : MonoBehaviour
     // ── Vision Computation ─────────────────────────────────────────────────────
     private float ComputeVision()
     {
-        if (_playerTransform == null) return 0f;
+        if (_playerTransform == null) {
+            Debug.Log("0 SIN PLAYER TRANSFORM");
+            return 0f;
+        }
 
         Vector3 toPlayer = _playerTransform.position - eyePoint.position;
         float distance = toPlayer.magnitude;
 
-        if (distance > visionRange) return 0f;
+        if (distance > visionRange)
+        {
+            Debug.Log("0 por estar muy lejos");
+            return 0f;
+        }
 
         float angle = Vector3.Angle(eyePoint.forward, toPlayer);
 
         // Outside full FOV cone
-        if (angle > visionAngle * 0.5f) return 0f;
+        if (angle > visionAngle * 0.5f)
+        {
+            Debug.Log("0 por estar fuera del fov");
+            return 0f;
+        }
 
         // Raycast for line-of-sight
-        if (!HasLineOfSight(toPlayer, distance)) return 0f;
+        if (!HasLineOfSight(toPlayer, distance))
+        {
+            Debug.Log("0 por lineofsight");
+            return 0f;
+        }
 
         // Peripheral zone → Partial
-        if (angle > peripheralAngle * 0.5f) return 0.5f;
+        if (angle > peripheralAngle * 0.5f)
+        {
+            Debug.Log("0.5, te ve de reojo");
+            return 0.5f;
+        }
 
         // Far end of range → Partial
-        if (distance > visionRange * peripheralFraction) return 0.5f;
+        if (distance > visionRange * peripheralFraction)
+        {
+            Debug.Log("0.5 estas lejos");
+            return 0.5f;
+        }
 
         // Clear direct sight
+        Debug.Log("TE ESTA VIENDO");
         return 1f;
     }
 
