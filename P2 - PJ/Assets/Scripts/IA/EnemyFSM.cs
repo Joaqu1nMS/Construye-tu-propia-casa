@@ -40,6 +40,7 @@ public class EnemyFSM : MonoBehaviour
     {
         EvaluateTransitions();
         _controller.ExecuteState(CurrentState);
+        Debug.Log(CurrentState);
     }
 
     // ── Transition Logic ───────────────────────────────────────────────────────

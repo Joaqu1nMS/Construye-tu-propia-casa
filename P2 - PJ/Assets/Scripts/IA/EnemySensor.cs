@@ -21,7 +21,7 @@ public class EnemySensor : MonoBehaviour
     // ── Inspector – Hearing ────────────────────────────────────────────────────
     [Header("Hearing")]
     [SerializeField] public float hearingRadiusWalk = 10f;
-    [SerializeField] public float hearingRadiusRun = 20f;
+    [SerializeField] public float hearingRadiusRun = 12f;
     [Tooltip("Layer mask for the player object.")]
     [SerializeField] private LayerMask playerLayerHearing;
 
@@ -179,10 +179,10 @@ public class EnemySensor : MonoBehaviour
         Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f);
         DrawCone(origin, visionRange, peripheralAngle);
 
-        // Hearing radii
-        Gizmos.color = new Color(0f, 1f, 1f, 0.3f);
+        // Hearing radio
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, hearingRadiusWalk);
-        Gizmos.color = new Color(0f, 0.5f, 1f, 0.2f);
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, hearingRadiusRun);
     }
 
