@@ -13,10 +13,10 @@ public class EnemyAIController : MonoBehaviour
 {
     // ── Inspector ──────────────────────────────────────────────────────────────
     [Header("Movement Speeds")]
-    [SerializeField] private float patrolSpeed     = 2f;
+    [SerializeField] private float patrolSpeed = 2f;
     [SerializeField] private float investigateSpeed = 3.5f;
-    [SerializeField] private float chaseSpeed      = 6f;
-    [SerializeField] private float searchSpeed     = 5f;
+    [SerializeField] private float chaseSpeed = 6f;
+    [SerializeField] private float searchSpeed = 5f;
 
     [Header("Patrol")]
     [SerializeField] private Transform[] waypoints;
@@ -24,74 +24,70 @@ public class EnemyAIController : MonoBehaviour
     [SerializeField] private float waypointReachThreshold = 0.5f;
 
     [Header("Investigate / Search")]
-    [SerializeField, Range(1f, 15f)] public float searchWaitTime   = 5f;
-    [SerializeField] private float lookAroundDuration              = 3f;
-    [SerializeField] private float arrivalThreshold                = 0.6f;
+    [SerializeField, Range(1f, 15f)] public float searchWaitTime = 5f;
+    [SerializeField] private float lookAroundDuration = 3f;
+    [SerializeField] private float arrivalThreshold = 0.6f;
 
-    [Header("Animator (optional)")]
+    [Header("Animator")]
     [SerializeField] private Animator animator;
-    private static readonly int SpeedHash  = Animator.StringToHash("Speed");
-    private static readonly int StateHash  = Animator.StringToHash("State");
 
     // ── Private ────────────────────────────────────────────────────────────────
-    private NavMeshAgent   _agent;
-    private EnemySensor    _sensor;
-    private EnemyFSM       _fsm;
+    private NavMeshAgent _agent;
+    private EnemySensor _sensor;
+    private EnemyFSM _fsm;
 
-    private int    _waypointIndex;
-    private bool   _isIdlingAtWaypoint;
+    private int _waypointIndex;
+    private bool _isIdlingAtWaypoint;
 
     private Vector3 _lastKnownPosition;
-    private bool    _reachedLKP;
-    private float   _searchTimer;
-    private bool    _isLookingAround;
+    private bool _reachedLKP;
+    private float _searchTimer;
+    private bool _isLookingAround;
 
     private Coroutine _idleCoroutine;
-    private Coroutine _lookAroundCoroutine;
 
     // ── Unity ──────────────────────────────────────────────────────────────────
     private void Awake()
     {
-        _agent  = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         _sensor = GetComponent<EnemySensor>();
-        _fsm    = GetComponent<EnemyFSM>();
+        _fsm = GetComponent<EnemyFSM>();
+        animator = GetComponent<Animator>();
     }
 
     // ── FSM Callbacks ──────────────────────────────────────────────────────────
     public void OnEnterState(EnemyFSM.EnemyState state)
     {
         StopAllCoroutines();
-        _isIdlingAtWaypoint  = false;
-        _isLookingAround     = false;
-        _reachedLKP          = false;
+        _isIdlingAtWaypoint = false;
+        _isLookingAround = false;
+        _reachedLKP = false;
 
         switch (state)
         {
             case EnemyFSM.EnemyState.Patrol:
                 _agent.speed = patrolSpeed;
-                SetAnimatorState(0);
+                animator.SetTrigger("walk_param");
                 GoToNextWaypoint();
                 break;
 
             case EnemyFSM.EnemyState.Investigate:
-                _agent.speed     = investigateSpeed;
+                _agent.speed = investigateSpeed;
                 _lastKnownPosition = _sensor.GetPlayerPosition();
                 _agent.SetDestination(_lastKnownPosition);
-                SetAnimatorState(1);
                 break;
 
             case EnemyFSM.EnemyState.Chase:
                 _agent.speed = chaseSpeed;
-                SetAnimatorState(2);
+                animator.SetTrigger("walk_param");
                 break;
 
             case EnemyFSM.EnemyState.Search:
-                _agent.speed       = searchSpeed;
+                _agent.speed = searchSpeed;
                 _lastKnownPosition = _sensor.GetPlayerPosition();
-                _reachedLKP        = false;
-                _searchTimer       = 0f;
+                _reachedLKP = false;
+                _searchTimer = 0f;
                 _agent.SetDestination(_lastKnownPosition);
-                SetAnimatorState(3);
                 break;
         }
     }
@@ -101,14 +97,12 @@ public class EnemyAIController : MonoBehaviour
     /// <summary>Called by EnemyFSM every Update() after transition evaluation.</summary>
     public void ExecuteState(EnemyFSM.EnemyState state)
     {
-        UpdateAnimatorSpeed();
-
         switch (state)
         {
-            case EnemyFSM.EnemyState.Patrol:      ExecutePatrol();      break;
+            case EnemyFSM.EnemyState.Patrol: ExecutePatrol(); break;
             case EnemyFSM.EnemyState.Investigate: ExecuteInvestigate(); break;
-            case EnemyFSM.EnemyState.Chase:       ExecuteChase();       break;
-            case EnemyFSM.EnemyState.Search:      ExecuteSearch();      break;
+            case EnemyFSM.EnemyState.Chase: ExecuteChase(); break;
+            case EnemyFSM.EnemyState.Search: ExecuteSearch(); break;
         }
     }
 
@@ -150,7 +144,7 @@ public class EnemyAIController : MonoBehaviour
         // Refresh LKP while player is still visible/audible and we haven't arrived yet
         float v = _sensor.GetVisionValue();
         float r = _sensor.GetNoiseValue();
-        bool  hasStimulus = v > 0f || r > 0.49f;
+        bool hasStimulus = v > 0f || r > 0.49f;
 
         if (!HasReachedDestination())
         {
@@ -163,7 +157,7 @@ public class EnemyAIController : MonoBehaviour
         }
         else
         {
-            _lookAroundCoroutine = StartCoroutine(LookAround(lookAroundDuration));
+            StartCoroutine(RutinaSearch());
         }
     }
 
@@ -181,7 +175,7 @@ public class EnemyAIController : MonoBehaviour
             if (HasReachedDestination())
             {
                 _reachedLKP = true;
-                _lookAroundCoroutine = StartCoroutine(LookAround(searchWaitTime));
+                StartCoroutine(RutinaSearch());
             }
         }
     }
@@ -193,41 +187,36 @@ public class EnemyAIController : MonoBehaviour
         return _agent.remainingDistance <= arrivalThreshold;
     }
 
-    private IEnumerator LookAround(float duration)
+    private IEnumerator LookAround(float degrees, float totalDuration)
     {
-        _isLookingAround = true;
-        _agent.ResetPath();
+        Quaternion startRotation = transform.rotation;
+        Quaternion targetRotation = startRotation * Quaternion.Euler(0f, degrees, 0f);
 
         float elapsed = 0f;
-        float interval = 0.8f;
-        float nextTurn = 0f;
 
-        while (elapsed < duration)
+        while (elapsed < totalDuration)
         {
             elapsed += Time.deltaTime;
-            if (elapsed >= nextTurn)
-            {
-                // Rotate to a random yaw offset to simulate looking around
-                float targetYaw = transform.eulerAngles.y + Random.Range(-120f, 120f);
-                transform.rotation = Quaternion.Euler(0f, targetYaw, 0f);
-                nextTurn = elapsed + interval;
-            }
+            float t = Mathf.Clamp01(elapsed / totalDuration);
+
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+
             yield return null;
         }
 
-        _isLookingAround = false;
+        transform.rotation = targetRotation; // snap final exacto
     }
 
-    private void UpdateAnimatorSpeed()
+    private IEnumerator RutinaSearch()
     {
-        if (animator == null) return;
-        animator.SetFloat(SpeedHash, _agent.velocity.magnitude);
-    }
+        animator.SetTrigger("Search_param");
+        yield return StartCoroutine(LookAround(80f, 3f));
+        yield return StartCoroutine(LookAround(-120f, 2f));
+        yield return StartCoroutine(LookAround(120f, 3f));
+        yield return StartCoroutine(LookAround(-170f, 2f));
+        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(LookAround(80f, 2f));
 
-    private void SetAnimatorState(int stateIndex)
-    {
-        if (animator == null) return;
-        animator.SetInteger(StateHash, stateIndex);
     }
 
     // ── Public Utility ─────────────────────────────────────────────────────────
@@ -240,5 +229,5 @@ public class EnemyAIController : MonoBehaviour
         {
             _agent.SetDestination(sourcePosition);
         }
-    }    
+    }
 }
