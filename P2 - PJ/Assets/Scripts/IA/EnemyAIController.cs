@@ -209,6 +209,7 @@ public class EnemyAIController : MonoBehaviour
 
     private IEnumerator RutinaSearch()
     {
+        _fsm.animacionSearch = true;
         animator.SetTrigger("Search_param");
         yield return StartCoroutine(LookAround(80f, 3f));
         yield return StartCoroutine(LookAround(-120f, 2f));
@@ -216,7 +217,7 @@ public class EnemyAIController : MonoBehaviour
         yield return StartCoroutine(LookAround(-170f, 2f));
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(LookAround(80f, 2f));
-
+        _fsm.animacionSearch = false;
     }
 
     // ── Public Utility ─────────────────────────────────────────────────────────

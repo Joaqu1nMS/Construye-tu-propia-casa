@@ -15,7 +15,7 @@ public class EnemyFSM : MonoBehaviour
     // ── Inspector ──────────────────────────────────────────────────────────────
     [Header("State Thresholds")]
     [SerializeField, Range(0f, 100f)] private float investigateThreshold = 40f;
-    [SerializeField, Range(0f, 100f)] private float chaseThreshold       = 75f;
+    [SerializeField, Range(0f, 100f)] private float chaseThreshold = 75f;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugLogs = true;
@@ -29,6 +29,7 @@ public class EnemyFSM : MonoBehaviour
     private FuzzyLogicController _fuzzy;
 
     private float chaseCooldown; 
+    public bool animacionSearch = false;
 
     // ── Unity ──────────────────────────────────────────────────────────────────
     private void Awake()
@@ -87,7 +88,7 @@ public class EnemyFSM : MonoBehaviour
                     _fuzzy.SetSuspicion(100f);
                     TransitionTo(EnemyState.Chase);
                 }
-                else if (s < chaseThreshold)         TransitionTo(EnemyState.Investigate);
+                else if (s < chaseThreshold && !animacionSearch) TransitionTo(EnemyState.Investigate);
                 break;
         }
     }

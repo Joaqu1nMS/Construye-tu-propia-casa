@@ -43,7 +43,7 @@ public class AnimacionJugar : MonoBehaviour
 
     private void CargarJuego()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
         GameManager.gameM?.CambiarCancion(1);
     }
 
