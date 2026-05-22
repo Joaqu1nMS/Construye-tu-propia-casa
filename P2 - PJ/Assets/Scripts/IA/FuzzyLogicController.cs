@@ -68,7 +68,7 @@ public class FuzzyLogicController : MonoBehaviour
         // Rule 1 – Critical Vision: Clear sight → instant 100
         if (Mathf.Approximately(VisionValue, V_CLEAR))
         {
-            Debug.Log("TE HE VISTO");
+            //Debug.Log("TE HE VISTO");
             SuspicionLevel = 100f;
             _rule3Primed   = false;
             return;
@@ -77,7 +77,7 @@ public class FuzzyLogicController : MonoBehaviour
         // Rule 2 – Partial Vision: accumulate suspicion
         if (Mathf.Approximately(VisionValue, V_PARTIAL))
         {
-            Debug.Log("Me parece haber visto algo");
+            //Debug.Log("Me parece haber visto algo");
             SuspicionLevel += suspicionIncreaseRateVisually * dt;
             _rule3Primed    = false;
             return;
@@ -88,7 +88,7 @@ public class FuzzyLogicController : MonoBehaviour
         // Rule 3 – Direct Hearing: Null vision + Loud noise → jump to 60 if below, then keep rising
         if (Mathf.Approximately(NoiseValue, R_LOUD))
         {
-            Debug.Log("SONIDO CERCA");
+            //Debug.Log("SONIDO CERCA");
             if (!_rule3Primed || SuspicionLevel < 60f)
             {
                 SuspicionLevel = Mathf.Max(SuspicionLevel, 60f);
@@ -104,13 +104,13 @@ public class FuzzyLogicController : MonoBehaviour
         // Rule 4 – Light Hearing: Null vision + Light noise → slow accumulate
         if (Mathf.Approximately(NoiseValue, R_LIGHT))
         {
-            Debug.Log("SONIDO LEJOS");
+            //Debug.Log("SONIDO LEJOS");
             SuspicionLevel += suspicionIncreaseRateHearing * dt;
             return;
         }
 
         // Rule 5 – Decay: No vision, no noise
-        Debug.Log("TODO EN ORDEN");
+        //Debug.Log("TODO EN ORDEN");
         float decayMultiplier = (_fsm != null && _fsm.CurrentState == EnemyFSM.EnemyState.Search)
             ? searchDecayMultiplier
             : 1f;

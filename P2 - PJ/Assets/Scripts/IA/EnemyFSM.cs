@@ -18,7 +18,7 @@ public class EnemyFSM : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float chaseThreshold = 75f;
 
     [Header("Debug")]
-    [SerializeField] private bool showDebugLogs = true;
+    [SerializeField] private bool showDebugLogs = false;
 
     // ── State Accessors ────────────────────────────────────────────────────────
     public EnemyState CurrentState  { get; private set; } = EnemyState.Patrol;
@@ -67,15 +67,15 @@ public class EnemyFSM : MonoBehaviour
 
             case EnemyState.Chase:
                 if (!hasLOS && chaseCooldown <= 0f){
-                    Debug.Log("Cooldown reset");
+                    //Debug.Log("Cooldown reset");
                     chaseCooldown = 3f;
                 }
                 
                 if(chaseCooldown > 0f){ 
-                    Debug.Log("Perdí visión, iniciando cooldown de persecución...");
+                    //Debug.Log("Perdí visión, iniciando cooldown de persecución...");
                     chaseCooldown -= 1f * Time.deltaTime;
                     if(chaseCooldown <= 0f){
-                        Debug.Log("Cooldown terminado, perdiendo al jugador.");
+                        //Debug.Log("Cooldown terminado, perdiendo al jugador.");
                         TransitionTo(EnemyState.Search);
                     }
                 }
@@ -88,7 +88,7 @@ public class EnemyFSM : MonoBehaviour
                     _fuzzy.SetSuspicion(100f);
                     TransitionTo(EnemyState.Chase);
                 }
-                else if (s < chaseThreshold && !animacionSearch) TransitionTo(EnemyState.Investigate);
+                else if (s < chaseThreshold && !animacionSearch) TransitionTo(EnemyState.Patrol);
                 break;
         }
     }
@@ -99,11 +99,11 @@ public class EnemyFSM : MonoBehaviour
 
         ExitState(CurrentState);
         PreviousState = CurrentState;
-        CurrentState  = next;
+        CurrentState  = next;        
         EnterState(next);
 
-        if (showDebugLogs)
-            Debug.Log($"[FSM] {PreviousState} → {CurrentState}  |  S={_fuzzy.SuspicionLevel:F1}");
+        /*if (showDebugLogs)
+            Debug.Log($"[FSM] {PreviousState} → {CurrentState}  |  S={_fuzzy.SuspicionLevel:F1}");*/
     }
 
     private void EnterState(EnemyState state)  => _controller.OnEnterState(state);
