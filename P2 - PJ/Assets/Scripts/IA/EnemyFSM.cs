@@ -28,6 +28,8 @@ public class EnemyFSM : MonoBehaviour
     private EnemyAIController  _controller;
     private FuzzyLogicController _fuzzy;
 
+    private float chaseCooldown; 
+
     // ── Unity ──────────────────────────────────────────────────────────────────
     private void Awake()
     {
@@ -63,7 +65,20 @@ public class EnemyFSM : MonoBehaviour
                 break;
 
             case EnemyState.Chase:
-                if (!hasLOS)                         TransitionTo(EnemyState.Search);
+                if (!hasLOS && chaseCooldown <= 0f){
+                    Debug.Log("Cooldown reset");
+                    chaseCooldown = 3f;
+                }
+                
+                if(chaseCooldown > 0f){ 
+                    Debug.Log("Perdí visión, iniciando cooldown de persecución...");
+                    chaseCooldown -= 1f * Time.deltaTime;
+                    if(chaseCooldown <= 0f){
+                        Debug.Log("Cooldown terminado, perdiendo al jugador.");
+                        TransitionTo(EnemyState.Search);
+                    }
+                }
+                
                 break;
 
             case EnemyState.Search:
