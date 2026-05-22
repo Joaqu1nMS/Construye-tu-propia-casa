@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -91,4 +92,9 @@ public class EnemyFSM : MonoBehaviour
 
     private void EnterState(EnemyState state)  => _controller.OnEnterState(state);
     private void ExitState(EnemyState state)   => _controller.OnExitState(state);
+
+    void OnDrawGizmos()
+    {
+        if (Application.isPlaying) Handles.Label(transform.position + Vector3.up * 3, $"Sospecha: {_fuzzy.SuspicionLevel}");
+    }
 }

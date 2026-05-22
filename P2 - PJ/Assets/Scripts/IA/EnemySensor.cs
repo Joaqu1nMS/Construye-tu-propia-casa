@@ -20,8 +20,8 @@ public class EnemySensor : MonoBehaviour
 
     // ── Inspector – Hearing ────────────────────────────────────────────────────
     [Header("Hearing")]
-    [SerializeField] public float hearingRadiusWalk = 10f;
-    [SerializeField] public float hearingRadiusRun = 12f;
+    [SerializeField] public float hearingRadiusWalk = 5f;
+    [SerializeField] public float hearingRadiusRun = 10f;
     [Tooltip("Layer mask for the player object.")]
     [SerializeField] private LayerMask playerLayerHearing;
 

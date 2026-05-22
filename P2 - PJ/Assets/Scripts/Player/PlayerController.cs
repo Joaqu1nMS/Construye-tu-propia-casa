@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
     // ──────────────────────────────────────────────
     //  Unity Lifecycle
     // ──────────────────────────────────────────────
+    public bool isBlocked = false;
 
     private void Awake()
     {
@@ -92,6 +93,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (isBlocked) return;
+        
         if (Time.timeScale == 0f)
         {
             crosshairRadius = 0f; // Hide crosshair when paused

@@ -20,6 +20,8 @@ public class ObjectPicker : MonoBehaviour
     public string nombreDescripcion;
     public TipoOBjeto tipo;
 
+    private MinijuegoRecogida minijuegoRecogida;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class ObjectPicker : MonoBehaviour
         {
             nombreDescripcion = gameObject.name;
         }
+        minijuegoRecogida = FindObjectOfType<MinijuegoRecogida>();
     }
 
     void Update()
@@ -45,11 +48,26 @@ public class ObjectPicker : MonoBehaviour
         if (Vector3.Distance(transform.position, player.transform.position) <= alcanceRecogida)
         {
             lineado.enabled = true;
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("ObjetoRecogido");
-                FindObjectOfType<ObjectManager>().HeSidoRecogido(nombreDescripcion);
-                Destroy(this.gameObject);
+                if (!minijuegoRecogida.juegoAbierto)
+                {
+                    minijuegoRecogida.IniciarMinijuego(); 
+                    player.GetComponent<PlayerController>().isBlocked = true;   
+                } else
+                {
+                    if (minijuegoRecogida.HeGanado())
+                    {
+                        Debug.Log("ObjetoRecogido");
+                        FindObjectOfType<ObjectManager>().HeSidoRecogido(nombreDescripcion);
+                        Destroy(this.gameObject);
+                    } else
+                    {
+                        // REPRODUCIR SONIDO
+                        Debug.Log("CAGASTE");
+                    }
+                    player.GetComponent<PlayerController>().isBlocked = false;
+                }
             }    
         } else
         {
