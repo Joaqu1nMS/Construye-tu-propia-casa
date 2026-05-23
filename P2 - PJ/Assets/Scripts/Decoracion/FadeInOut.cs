@@ -5,57 +5,54 @@ using UnityEngine.UI;
 
 public class FadeInOut : MonoBehaviour
 {
-    [SerializeField] private RawImage imagen;
+    [SerializeField] private CanvasGroup cg;
     // Start is called before the first frame update
     void Start()
     {       
-        if (imagen == null)
+        if (cg == null)
         {
-            imagen = GetComponent<RawImage>();
+            cg = GetComponentInParent<CanvasGroup>();
         } 
         SetOut();
     }
 
     public void SetIn()
     {
-        imagen.color = new Color(imagen.color.r, imagen.color.g, imagen.color.b, 1);        
+        cg.alpha = 1;       
     }
 
     public void SetOut()
     {
-        imagen.color = new Color(imagen.color.r, imagen.color.g, imagen.color.b, 0); 
+        cg.alpha = 0;
     }
 
     public IEnumerator FadeIn(float duracion)
     {
-        imagen.color = new Color(imagen.color.r, imagen.color.g, imagen.color.b, 0);        
+        cg.alpha = 0;
 
-        float t = 0.0f;        
-        Color c = imagen.color;
+        float t = 0.0f;                
         while (t < duracion)
         {
             t += Time.deltaTime;
-            c.a = t / duracion;
-            imagen.color = c;
+            cg.alpha = t / duracion;            
             yield return null;
         }
-        imagen.color = new Color(imagen.color.r, imagen.color.g, imagen.color.b, 1);        
+        cg.alpha = 1;       
     }
 
     public IEnumerator FadeOut(float duracion)
     {
-        imagen.color = new Color(imagen.color.r, imagen.color.g, imagen.color.b, 1);        
+        cg.alpha = 1;
 
-        float t = 0.0f;        
-        Color c = imagen.color;
+        float t = 0.0f;                
         while (t < duracion)
         {
             t += Time.deltaTime;
-            c.a = 1 - t / duracion;
-            imagen.color = c;
+            cg.alpha = 1 - t / duracion;
+            
             yield return null;
         }
-        imagen.color = new Color(imagen.color.r, imagen.color.g, imagen.color.b, 0);  
+        cg.alpha = 0;
     }
 
     public IEnumerator FadeInAndOut(float d)
