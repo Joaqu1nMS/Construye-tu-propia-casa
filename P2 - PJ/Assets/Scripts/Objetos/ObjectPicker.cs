@@ -64,6 +64,7 @@ public class ObjectPicker : MonoBehaviour
                     } else
                     {
                         // REPRODUCIR SONIDO
+                        FindObjectOfType<EnemyAIController>().NotifyLoudNoise(player.transform.position);
                         Debug.Log("CAGASTE");
                     }
                     player.GetComponent<PlayerController>().isBlocked = false;

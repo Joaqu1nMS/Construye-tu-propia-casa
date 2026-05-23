@@ -39,6 +39,7 @@ public class EnemyAIController : MonoBehaviour
     private NavMeshAgent _agent;
     private EnemySensor _sensor;
     private EnemyFSM _fsm;
+    private FuzzyLogicController fuzzy;
 
     private int _waypointIndex;
     private bool _isIdlingAtWaypoint;
@@ -56,6 +57,7 @@ public class EnemyAIController : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _sensor = GetComponent<EnemySensor>();
         _fsm = GetComponent<EnemyFSM>();
+        fuzzy = GetComponent<FuzzyLogicController>();
         animator = GetComponent<Animator>();
     }
 
@@ -264,10 +266,16 @@ public class EnemyAIController : MonoBehaviour
     public void NotifyLoudNoise(Vector3 sourcePosition)
     {
         _lastKnownPosition = sourcePosition;
-        if (_fsm.CurrentState == EnemyFSM.EnemyState.Patrol ||
+        if (_fsm.CurrentState != EnemyFSM.EnemyState.Chase)
+        {
+            Debug.Log("INVESTIGA POR RUIDO");
+            fuzzy.SetSuspicion(_fsm.investigateThreshold);
+            ExecuteInvestigate();
+        }
+        /*if (_fsm.CurrentState == EnemyFSM.EnemyState.Patrol ||
             _fsm.CurrentState == EnemyFSM.EnemyState.Investigate)
         {
             _agent.SetDestination(sourcePosition);
-        }
+        }*/
     }
 }
