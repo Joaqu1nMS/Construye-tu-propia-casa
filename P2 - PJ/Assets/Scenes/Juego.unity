@@ -13306,6 +13306,9 @@ MonoBehaviour:
   puertaLayer:
     serializedVersion: 2
     m_Bits: 4096
+  mmm: {fileID: 8300000, guid: 729e7c63c1952904791baebdd44ef7b3, type: 3}
+  hey: {fileID: 8300000, guid: 48952ae8aad74d340a6fdb2832911f77, type: 3}
+  pillado: {fileID: 8300000, guid: d19244ed8e04dee45a69bc8ff0971f18, type: 3}
 --- !u!114 &1472210193
 MonoBehaviour:
   m_ObjectHideFlags: 0

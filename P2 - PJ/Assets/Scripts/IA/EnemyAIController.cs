@@ -34,6 +34,9 @@ public class EnemyAIController : MonoBehaviour
     [Header("Otros")]
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask puertaLayer;
+    [SerializeField] private AudioClip mmm;
+    [SerializeField] private AudioClip hey;
+    [SerializeField] private AudioClip pillado;
 
     // ── Private ────────────────────────────────────────────────────────────────
     private NavMeshAgent _agent;
@@ -80,6 +83,7 @@ public class EnemyAIController : MonoBehaviour
                 break;
 
             case EnemyFSM.EnemyState.Investigate:
+                GameManager.gameM.ReproducirSonido(mmm, -1);
                 _agent.speed = investigateSpeed;
                 _lastKnownPosition = _sensor.GetPlayerPosition();
                 _agent.SetDestination(_lastKnownPosition);
@@ -88,6 +92,8 @@ public class EnemyAIController : MonoBehaviour
                 break;
 
             case EnemyFSM.EnemyState.Chase:
+            
+                if (_fsm.PreviousState != EnemyFSM.EnemyState.Search) GameManager.gameM.ReproducirSonido(hey, -1);
                 _agent.speed = chaseSpeed;
                 animator.SetBool("Walk", true);
                 animator.SetBool("Search", false);
@@ -214,8 +220,9 @@ public class EnemyAIController : MonoBehaviour
             return;
         }
 
+        GameManager.gameM.ReproducirSonido(pillado, -1);
         FindObjectOfType<PlayerController>().isBlocked = true;
-        GetComponent<EnemyFSM>().isBlocked = true;
+        GetComponent<EnemyFSM>().isBlocked = true;        
         _agent.SetDestination(_agent.transform.position); // Detener movimiento
         StartCoroutine(GameManager.gameM.CambiarEscena(1, 1f));
     }
@@ -269,7 +276,7 @@ public class EnemyAIController : MonoBehaviour
         if (_fsm.CurrentState != EnemyFSM.EnemyState.Chase)
         {
             Debug.Log("INVESTIGA POR RUIDO");
-            fuzzy.SetSuspicion(_fsm.chaseThreshold);
+            fuzzy.SetSuspicion(_fsm.chaseThreshold-1);
             ExecuteInvestigate();
         }
         /*if (_fsm.CurrentState == EnemyFSM.EnemyState.Patrol ||

@@ -99,8 +99,10 @@ public class GameManager : MonoBehaviour
 
     public void ReproducirSonido(AudioClip sonido, float pitchMin)
     {
+        
         System.Random r = new System.Random();
-        SFX.pitch = 0.8f + pitchMin + (float)r.NextDouble();
+        if (pitchMin != -1) SFX.pitch = 0.8f + pitchMin + (float)r.NextDouble();
+        else SFX.pitch = 1;
         SFX.PlayOneShot(sonido);
     }
 
