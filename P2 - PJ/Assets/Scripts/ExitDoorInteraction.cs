@@ -43,8 +43,7 @@ public class ExitDoorInteraction : MonoBehaviour
 
     // ─── FADE ─────────────────────────────────────────────────
     [Header("Fade a negro")]
-    [Tooltip("Image UI de pantalla completa. Color negro, alpha 0, desactivada al inicio.")]
-    public FadeInOut fadeImage;
+    [Tooltip("Image UI de pantalla completa. Color negro, alpha 0, desactivada al inicio.")]    
     public float duracionFade = 1.5f;
 
     // ─── TEXTOS ───────────────────────────────────────────────
@@ -114,15 +113,8 @@ public class ExitDoorInteraction : MonoBehaviour
             cronometro.DetenerYComprobarRecord();
 
         // Fade a negro
-        if (fadeImage != null)
-        {
-            fadeImage.FadeOut(duracionFade);
-        }
-        else
-        {
-            yield return new WaitForSeconds(duracionFade);
-        }
-
+        yield return StartCoroutine(GameManager.gameM.fade.FadeIn(duracionFade));
+        GameManager.gameM.fade.SetOut();
         menuWin.SetActive(true);
         
         estaAnimando = false;

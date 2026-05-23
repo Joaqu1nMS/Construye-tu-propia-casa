@@ -27,8 +27,7 @@ public class GameManager : MonoBehaviour
             SFX.volume = PlayerPrefs.GetFloat("VolumenSFX", 0.5f);
         
         fade = GetComponentInChildren<FadeInOut>();
-        fade.FadeIn(1f);
-        fade.FadeOut(1f);
+        //StartCoroutine(Prye());
     }
 
     void Update()
@@ -105,14 +104,20 @@ public class GameManager : MonoBehaviour
         SFX.PlayOneShot(sonido);
     }
 
+    private IEnumerator Prye()
+    {
+        yield return StartCoroutine(fade.FadeIn(1f));
+        yield return StartCoroutine(fade.FadeOut(1f));
+    }
+
     public IEnumerator CambiarEscena(int index, float duracionFade)
     {
         Debug.Log("Cambio escena");
-        yield return fade.FadeIn(duracionFade);
+        yield return StartCoroutine(fade.FadeIn(duracionFade));
         yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene(index);        
-        yield return new WaitForSeconds(0.1f);
+        
         Debug.Log("FADE OUT");
-        yield return fade.FadeOut(duracionFade);
+        yield return StartCoroutine(fade.FadeOut(duracionFade));
     }    
 }
