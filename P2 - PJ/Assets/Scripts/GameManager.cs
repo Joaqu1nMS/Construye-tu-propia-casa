@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public AudioSource music;
     public AudioSource SFX;
 
-    public AudioClip botonPresionado;
+    public AudioClip botonPresionado;    
     public FadeInOut fade;
 
     void Start()

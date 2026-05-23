@@ -1472,7 +1472,8 @@ MonoBehaviour:
   camara: {fileID: 1347084075}
   puertaPrincipal: {fileID: 7811033080458990065}
   offsetDestino: {x: -0.91, y: 1.8, z: 2}
-  duracion: 1
+  duracion: 6
+  switchLight: {fileID: 8300000, guid: ea7371deab5e2a94894035aad798126c, type: 3}
 --- !u!4 &719406159
 Transform:
   m_ObjectHideFlags: 0

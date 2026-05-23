@@ -715,6 +715,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8329675992423774669, guid: 92f1ca1da7412494794c66cf79330936,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 8329675992423774669, guid: 92f1ca1da7412494794c66cf79330936,
+        type: 3}
       propertyPath: nombreDescripcion
       value: "Las pesadillas tienen v\xEDa libre"
       objectReference: {fileID: 0}
@@ -2679,6 +2684,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5287956250708131041, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 5287956250708131041, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
       propertyPath: nombreDescripcion
       value: Suele leer en el sofa
       objectReference: {fileID: 0}
@@ -2709,6 +2719,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7773780664803705993, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 7773780664803705993, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
       propertyPath: nombreDescripcion
       value: Suele leer en el sofa
       objectReference: {fileID: 0}
@@ -2717,6 +2732,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 9168259401206182140, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 9168259401206182140, guid: d1b5f5a54860cdf4d9b4ee6ad47d98a6,
         type: 3}
       propertyPath: alcanceRecogida
@@ -3312,6 +3332,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
+        type: 3}
       propertyPath: nombreDescripcion
       value: Ya tiene ventanas el salon para ver
       objectReference: {fileID: 0}
@@ -3759,6 +3784,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
       propertyPath: nombreDescripcion
       value: "Bonita maceta la del sal\xF3n"
       objectReference: {fileID: 0}
@@ -3909,6 +3939,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5263908663434255960, guid: 00feb492a9700c4409f92afebac9d1be,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 5263908663434255960, guid: 00feb492a9700c4409f92afebac9d1be,
         type: 3}
       propertyPath: nombreDescripcion
@@ -4730,6 +4765,7 @@ MonoBehaviour:
   alcanceRecogida: 2
   nombreDescripcion: "No mas caf\xE9 por la ma\xF1ana"
   tipo: 5
+  golpeObjeto: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
 --- !u!65 &493311640
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7440,6 +7476,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1763388368665564193, guid: 5de78bd164cebf04aafb3f0f67755b39,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 1763388368665564193, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
       propertyPath: alcanceRecogida
       value: 3
       objectReference: {fileID: 0}
@@ -7453,6 +7494,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3100367331491444183, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 3100367331491444183, guid: 5de78bd164cebf04aafb3f0f67755b39,
         type: 3}
       propertyPath: alcanceRecogida
@@ -7473,6 +7519,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6753174495679865030, guid: 5de78bd164cebf04aafb3f0f67755b39,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 6753174495679865030, guid: 5de78bd164cebf04aafb3f0f67755b39,
         type: 3}
       propertyPath: nombreDescripcion
@@ -7716,6 +7767,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
       propertyPath: nombreDescripcion
@@ -10003,6 +10059,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5500977326679077884, guid: c99b8bcce97d42a4b8f31f74e1fb2f97,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 5500977326679077884, guid: c99b8bcce97d42a4b8f31f74e1fb2f97,
         type: 3}
       propertyPath: alcanceRecogida
@@ -13572,6 +13633,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3309814329924922055, guid: 3d9a73767c9580f41a60a46a916a2d7e,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 3309814329924922055, guid: 3d9a73767c9580f41a60a46a916a2d7e,
+        type: 3}
       propertyPath: alcanceRecogida
       value: 3
       objectReference: {fileID: 0}
@@ -14006,6 +14072,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1124564104163854529, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 1124564104163854529, guid: 9f3e455d51bfe094dbd708f78b8ca1b5,
+        type: 3}
       propertyPath: nombreDescripcion
       value: Que tire la basura por la ventana
       objectReference: {fileID: 0}
@@ -14091,6 +14162,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 525452129295838959, guid: 8626c01f7c8dab34fb1903996b859d96,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 525452129295838959, guid: 8626c01f7c8dab34fb1903996b859d96,
         type: 3}
       propertyPath: nombreDescripcion
@@ -14931,6 +15007,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1110377607791057333, guid: daf95c50185fda444a2852ebce6f6100,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 1110377607791057333, guid: daf95c50185fda444a2852ebce6f6100,
+        type: 3}
       propertyPath: nombreDescripcion
       value: Espero que no tenga una urgencia
       objectReference: {fileID: 0}
@@ -14939,6 +15020,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2499124168860582171, guid: daf95c50185fda444a2852ebce6f6100,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 2499124168860582171, guid: daf95c50185fda444a2852ebce6f6100,
         type: 3}
       propertyPath: nombreDescripcion
@@ -15143,6 +15229,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8145648024608155022, guid: d3cc05378d2a54649803677352873cfc,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 9084554183623709229, guid: d3cc05378d2a54649803677352873cfc,
         type: 3}
       propertyPath: m_Name
@@ -15309,6 +15400,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 878221339519193381, guid: 429613986f3ea874d9f9b0ec96588c06,
         type: 3}
       propertyPath: nombreDescripcion
@@ -15538,6 +15634,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1062469450189967605, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 1062469450189967605, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
+        type: 3}
       propertyPath: nombreDescripcion
       value: "Nadie usa ya el tel\xE9fono fijo"
       objectReference: {fileID: 0}
@@ -15616,6 +15717,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5659462071472139888, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 5659462071472139888, guid: 0c63cc08a7168d14c8f30c7b09fd2b3b,
         type: 3}
       propertyPath: nombreDescripcion
@@ -17301,6 +17407,7 @@ MonoBehaviour:
   alcanceRecogida: 2.5
   nombreDescripcion: "\xBFPorque tiene un poster ah\xED?"
   tipo: 5
+  golpeObjeto: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
 --- !u!208 &1974957063
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17603,6 +17710,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1256261091671957078, guid: 41f0bfe876dd673428d3434069e984bb,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 1256261091671957078, guid: 41f0bfe876dd673428d3434069e984bb,
         type: 3}
       propertyPath: nombreDescripcion
@@ -18050,6 +18162,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8145648024608155022, guid: d3cc05378d2a54649803677352873cfc,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 9084554183623709229, guid: d3cc05378d2a54649803677352873cfc,
         type: 3}
       propertyPath: m_Name
@@ -18308,6 +18425,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
       propertyPath: nombreDescripcion
       value: "Le sobra una maceta en el sal\xF3n"
       objectReference: {fileID: 0}
@@ -18388,6 +18510,11 @@ PrefabInstance:
       propertyPath: tipo
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
+        type: 3}
+      propertyPath: golpeObjeto
+      value: 
+      objectReference: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
     - target: {fileID: 1539617173141734494, guid: 4233678305244324090fe2bd2e4aa9b2,
         type: 3}
       propertyPath: nombreDescripcion
@@ -18774,6 +18901,7 @@ MonoBehaviour:
   alcanceRecogida: 3
   nombreDescripcion: Es su album favorito
   tipo: 2
+  golpeObjeto: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
 --- !u!23 &2143041384
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24982,6 +25110,7 @@ MonoBehaviour:
   alcanceRecogida: 2
   nombreDescripcion: "Ya no podr\xE1 escuchar m\xFAsica"
   tipo: 5
+  golpeObjeto: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
 --- !u!114 &6207663081908461943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26238,6 +26367,7 @@ MonoBehaviour:
   alcanceRecogida: 2
   nombreDescripcion: "Es el \xFAltimo album que escuch\xF3"
   tipo: 2
+  golpeObjeto: {fileID: 8300000, guid: 8524c4364a9d3ac43bc846eecdb117d3, type: 3}
 --- !u!114 &7612231106149837364
 MonoBehaviour:
   m_ObjectHideFlags: 0

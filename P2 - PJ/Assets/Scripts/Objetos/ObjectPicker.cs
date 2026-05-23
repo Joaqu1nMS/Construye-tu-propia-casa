@@ -16,9 +16,10 @@ public class ObjectPicker : MonoBehaviour
 {
     private Outline lineado;
     [SerializeField] private GameObject player;
-    [SerializeField] private float alcanceRecogida = 2f;
+    [SerializeField] private float alcanceRecogida = 2f;    
     public string nombreDescripcion;
     public TipoOBjeto tipo;
+    public AudioClip golpeObjeto;
 
     private MinijuegoRecogida minijuegoRecogida;
 
@@ -64,6 +65,7 @@ public class ObjectPicker : MonoBehaviour
                     } else
                     {
                         // REPRODUCIR SONIDO
+                        GameManager.gameM.ReproducirSonido(golpeObjeto, 0.5f);
                         FindObjectOfType<EnemyAIController>().NotifyLoudNoise(player.transform.position);
                         Debug.Log("CAGASTE");
                     }

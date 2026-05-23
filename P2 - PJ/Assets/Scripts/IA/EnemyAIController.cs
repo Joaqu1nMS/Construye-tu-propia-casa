@@ -269,7 +269,7 @@ public class EnemyAIController : MonoBehaviour
         if (_fsm.CurrentState != EnemyFSM.EnemyState.Chase)
         {
             Debug.Log("INVESTIGA POR RUIDO");
-            fuzzy.SetSuspicion(_fsm.investigateThreshold);
+            fuzzy.SetSuspicion(_fsm.chaseThreshold);
             ExecuteInvestigate();
         }
         /*if (_fsm.CurrentState == EnemyFSM.EnemyState.Patrol ||

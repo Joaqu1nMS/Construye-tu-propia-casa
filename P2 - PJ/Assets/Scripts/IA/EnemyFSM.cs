@@ -15,7 +15,7 @@ public class EnemyFSM : MonoBehaviour
     // ── Inspector ──────────────────────────────────────────────────────────────
     [Header("State Thresholds")]
     [SerializeField, Range(0f, 100f)] public float investigateThreshold = 40f;
-    [SerializeField, Range(0f, 100f)] private float chaseThreshold = 75f;
+    [SerializeField, Range(0f, 100f)] public float chaseThreshold = 75f;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugLogs = false;
