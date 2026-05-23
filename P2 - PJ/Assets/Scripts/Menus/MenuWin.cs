@@ -64,6 +64,7 @@ public class MenuWin : MonoBehaviour
         {
             player.isBlocked = true; // Bloquea el movimiento en Update()
             player.UnlockCursor();   // Libera el ratón para pulsar botones o escribir
+            player.crosshairRadius = 0f; 
         }
     }
 
@@ -77,7 +78,7 @@ public class MenuWin : MonoBehaviour
             GameManager.gameM.ReiniciarCancion();
         }
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartCoroutine(GameManager.gameM.CambiarEscena(SceneManager.GetActiveScene().buildIndex, 1f));
     }
 
     private void IrAlMenu()
@@ -89,6 +90,6 @@ public class MenuWin : MonoBehaviour
             GameManager.gameM.CambiarCancion(0);
         }
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        StartCoroutine(GameManager.gameM.CambiarEscena(0, 1f));
     }
 }
