@@ -30,6 +30,7 @@ public class EnemyFSM : MonoBehaviour
 
     private float chaseCooldown; 
     public bool animacionSearch = false;
+    public bool isBlocked = false;
 
     // ── Unity ──────────────────────────────────────────────────────────────────
     private void Awake()
@@ -42,6 +43,12 @@ public class EnemyFSM : MonoBehaviour
 
     private void Update()
     {
+        if(isBlocked)
+        {
+            StopAllCoroutines();
+            return;
+        }
+        
         EvaluateTransitions();
         _controller.ExecuteState(CurrentState);
         Debug.Log(CurrentState);
@@ -85,9 +92,11 @@ public class EnemyFSM : MonoBehaviour
             case EnemyState.Search:
                 if (hasLOS)
                 {
+                    Debug.Log("JUGADOR VISTO.");
                     _fuzzy.SetSuspicion(100f);
                     TransitionTo(EnemyState.Chase);
                 }
+                else if (s < chaseThreshold && s > investigateThreshold) TransitionTo(EnemyState.Investigate);
                 else if (s < chaseThreshold && !animacionSearch) TransitionTo(EnemyState.Patrol);
                 break;
         }

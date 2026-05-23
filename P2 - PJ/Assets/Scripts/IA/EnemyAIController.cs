@@ -33,6 +33,7 @@ public class EnemyAIController : MonoBehaviour
 
     [Header("Otros")]
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask puertaLayer;
 
     // ── Private ────────────────────────────────────────────────────────────────
     private NavMeshAgent _agent;
@@ -70,7 +71,7 @@ public class EnemyAIController : MonoBehaviour
         switch (state)
         {
             case EnemyFSM.EnemyState.Patrol:
-                _agent.speed = patrolSpeed;                
+                _agent.speed = patrolSpeed;
                 GoToNextWaypoint();
                 animator.SetBool("Walk", true);
                 animator.SetBool("Search", false);
@@ -121,6 +122,8 @@ public class EnemyAIController : MonoBehaviour
     // PATROL – walk between waypoints, idle briefly at each one
     private void ExecutePatrol()
     {
+        _sensor.visionAngle = 50f; // visión omnidireccional durante búsqueda
+        _sensor.peripheralAngle = 90f;
         if (waypoints == null || waypoints.Length == 0) return;
         if (_isIdlingAtWaypoint) return;
 
@@ -149,6 +152,8 @@ public class EnemyAIController : MonoBehaviour
     // INVESTIGATE – fast-walk to last stimulus, look around, let suspicion decay
     private void ExecuteInvestigate()
     {
+        _sensor.visionAngle = 50f; // visión omnidireccional durante búsqueda
+        _sensor.peripheralAngle = 90f;
         if (_isLookingAround) return;
 
         // Refresh LKP while player is still visible/audible and we haven't arrived yet
@@ -174,12 +179,17 @@ public class EnemyAIController : MonoBehaviour
     // CHASE – continuously pursue player's real-time position
     private void ExecuteChase()
     {
+        _sensor.visionAngle = 50f; // visión omnidireccional durante búsqueda
+        _sensor.peripheralAngle = 90f;
         _agent.SetDestination(_sensor.GetPlayerPosition());
     }
 
     // SEARCH – run to LKP, look around, let FSM handle decay back to Investigate
     private void ExecuteSearch()
     {
+        _sensor.visionAngle = 180f; // visión omnidireccional durante búsqueda
+        _sensor.peripheralAngle = 180f;
+
         if (!_reachedLKP)
         {
             if (HasReachedDestination())
@@ -193,11 +203,20 @@ public class EnemyAIController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (((1 << other.gameObject.layer) & playerLayer) == 0)
+        {
+            if (((1 << other.gameObject.layer) & puertaLayer) == 0)
+            {
+                return; // No es ni el jugador ni la puerta, ignorar
+            }
+            other.GetComponent<DoorInteraction>()?.AbrePuertaVecino();
             return;
+        }
 
-        Debug.Log($"PILLADO {other.gameObject.name}");
+        FindObjectOfType<PlayerController>().isBlocked = true;
+        GetComponent<EnemyFSM>().isBlocked = true;
+        _agent.SetDestination(_agent.transform.position); // Detener movimiento
         StartCoroutine(GameManager.gameM.CambiarEscena(1, 1f));
-    }      
+    }
 
     // ── Helpers ────────────────────────────────────────────────────────────────
     private bool HasReachedDestination()
@@ -227,16 +246,16 @@ public class EnemyAIController : MonoBehaviour
     }
 
     private IEnumerator RutinaSearch()
-    {        
-        _fsm.animacionSearch = true;   
-        
+    {
+        _fsm.animacionSearch = true;
+
         yield return StartCoroutine(LookAround(80f, 3f));
         yield return StartCoroutine(LookAround(-120f, 2f));
         yield return StartCoroutine(LookAround(120f, 3f));
         yield return StartCoroutine(LookAround(-170f, 2f));
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(LookAround(80f, 2f));
-        
+
         _fsm.animacionSearch = false;
     }
 

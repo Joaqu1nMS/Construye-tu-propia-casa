@@ -70,8 +70,7 @@ public class DoorInteraction : MonoBehaviour
     // ══════════════════════════════════════════════════════════
     void Awake()
     {
-        player = GameObject.FindObjectOfType<PlayerController>().gameObject;
-
+        player = GameObject.FindObjectOfType<PlayerController>().gameObject; 
         outline = GetComponent<Outline>();
 
         if (doorCollider == null) doorCollider = GetComponent<Collider>();
@@ -83,7 +82,7 @@ public class DoorInteraction : MonoBehaviour
     }
 
     void Update(){
-        if (Time.timeScale == 0f) return; 
+        if (Time.timeScale == 0f) return;
     }
 
     // ══════════════════════════════════════════════════════════
@@ -150,7 +149,7 @@ public class DoorInteraction : MonoBehaviour
     // ══════════════════════════════════════════════════════════
     //  COROUTINE: rota la puerta y gestiona el Collider
     // ══════════════════════════════════════════════════════════
-    IEnumerator AnimarPuerta(float anguloInicio, float anguloFin)
+    public IEnumerator AnimarPuerta(float anguloInicio, float anguloFin)
     {
         estaAnimando = true;
 
@@ -195,6 +194,18 @@ public class DoorInteraction : MonoBehaviour
             SetLabelActivo(true);
             SetOutlineActivo(true);
         }
+    }
+
+    public void AbrePuertaVecino()
+    {   
+        if(estaAbierta || estaAnimando)
+        {
+            Debug.Log("VECINO NO ABRE PUERTA");
+            return; 
+        }
+
+        Debug.Log("VECINO ABRE PUERTA");
+        StartCoroutine(AnimarPuerta(anguloCerrada, anguloAbierta));
     }
 
     // ══════════════════════════════════════════════════════════

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -93,7 +94,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (isBlocked) return;
+        if (isBlocked) {
+            _cc.Move(Vector3.zero); 
+            return;
+        }
         
         if (Time.timeScale == 0f)
         {

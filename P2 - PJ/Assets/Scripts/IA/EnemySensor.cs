@@ -14,7 +14,7 @@ public class EnemySensor : MonoBehaviour
     [SerializeField, Range(10f, 180f)] public float visionAngle = 90f;
     [SerializeField, Range(0f, 1f)] private float peripheralFraction = 0.5f;
     [Tooltip("Angle beyond which vision is considered peripheral (0.5).")]
-    [SerializeField, Range(0f, 90f)] private float peripheralAngle = 60f;
+    [SerializeField, Range(0f, 180f)] public float peripheralAngle = 60f;
     [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private LayerMask playerLayer;
 
