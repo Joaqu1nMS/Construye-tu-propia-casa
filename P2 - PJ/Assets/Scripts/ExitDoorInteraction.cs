@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 /// ============================================================
 ///  ExitDoorInteraction.cs  —  Puerta de salida / victoria
@@ -43,7 +44,7 @@ public class ExitDoorInteraction : MonoBehaviour
     // ─── FADE ─────────────────────────────────────────────────
     [Header("Fade a negro")]
     [Tooltip("Image UI de pantalla completa. Color negro, alpha 0, desactivada al inicio.")]
-    public UnityEngine.UI.Image fadeImage;
+    public FadeInOut fadeImage;
     public float duracionFade = 1.5f;
 
     // ─── TEXTOS ───────────────────────────────────────────────
@@ -67,12 +68,6 @@ public class ExitDoorInteraction : MonoBehaviour
 
         SetOutlineActivo(false);
         SetLabelActivo(false);
-
-        if (fadeImage != null)
-        {
-            Color c = fadeImage.color; c.a = 0f; fadeImage.color = c;
-            fadeImage.gameObject.SetActive(false);
-        }
     }
 
     // ══════════════════════════════════════════════════════════
@@ -121,17 +116,7 @@ public class ExitDoorInteraction : MonoBehaviour
         // Fade a negro
         if (fadeImage != null)
         {
-            fadeImage.gameObject.SetActive(true);
-            float t = 0f;
-            while (t < duracionFade)
-            {
-                t += Time.deltaTime;
-                Color c = fadeImage.color;
-                c.a = Mathf.Clamp01(t / duracionFade);
-                fadeImage.color = c;
-                yield return null;
-            }
-            Color final = fadeImage.color; final.a = 1f; fadeImage.color = final;
+            fadeImage.FadeOut(duracionFade);
         }
         else
         {

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public AudioSource SFX;
 
     public AudioClip botonPresionado;
+    public FadeInOut fade;
 
     void Start()
     {
@@ -24,6 +25,10 @@ public class GameManager : MonoBehaviour
 
         if (SFX != null)
             SFX.volume = PlayerPrefs.GetFloat("VolumenSFX", 0.5f);
+        
+        fade = GetComponentInChildren<FadeInOut>();
+        fade.FadeIn(1f);
+        fade.FadeOut(1f);
     }
 
     void Update()
@@ -65,7 +70,7 @@ public class GameManager : MonoBehaviour
     public void CambiarCancion(int index)
     {
         music.clip = soundtrack[index];
-        music.loop = true;
+        music.loop = true;        
         music.Play();
         StartCoroutine(FadeInMusic());
     }
@@ -99,4 +104,15 @@ public class GameManager : MonoBehaviour
         SFX.pitch = 0.8f + pitchMin + (float)r.NextDouble();
         SFX.PlayOneShot(sonido);
     }
+
+    public IEnumerator CambiarEscena(int index, float duracionFade)
+    {
+        Debug.Log("Cambio escena");
+        yield return fade.FadeIn(duracionFade);
+        yield return new WaitForSeconds(0.1f);
+        SceneManager.LoadScene(index);        
+        yield return new WaitForSeconds(0.1f);
+        Debug.Log("FADE OUT");
+        yield return fade.FadeOut(duracionFade);
+    }    
 }

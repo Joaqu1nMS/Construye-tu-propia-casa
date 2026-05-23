@@ -2,20 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimacionJugar : MonoBehaviour
 {
     [SerializeField] GameObject salon;
     [SerializeField] GameObject cuarto;
     [SerializeField] GameObject camara;
-    [SerializeField] GameObject puertaPrincipal;
+    [SerializeField] GameObject puertaPrincipal;    
     [SerializeField] Vector3 offsetDestino;
     [SerializeField] private float duracion;
-
-    void Start()
-    {
-
-    }
 
     public void LanzarAnimacion()
     {
@@ -38,13 +34,12 @@ public class AnimacionJugar : MonoBehaviour
         }
 
         camara.transform.position = destino; // asegurar posición final exacta
-        CargarJuego();
+        
     }
 
     private void CargarJuego()
     {
-        SceneManager.LoadScene(1);
-        GameManager.gameM?.CambiarCancion(1);
+        SceneManager.LoadScene(1);        
     }
 
     private IEnumerator Animacion()
@@ -69,5 +64,7 @@ public class AnimacionJugar : MonoBehaviour
         {
             v.TurnOff();
         }
+        
+        StartCoroutine(GameManager.gameM.CambiarEscena(1, 1f));
     }
 }
