@@ -31,6 +31,9 @@ public class EnemyAIController : MonoBehaviour
     [Header("Animator")]
     [SerializeField] private Animator animator;
 
+    [Header("Otros")]
+    [SerializeField] private LayerMask playerLayer;
+
     // ── Private ────────────────────────────────────────────────────────────────
     private NavMeshAgent _agent;
     private EnemySensor _sensor;
@@ -186,6 +189,15 @@ public class EnemyAIController : MonoBehaviour
             }
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (((1 << other.gameObject.layer) & playerLayer) == 0)
+            return;
+
+        Debug.Log($"PILLADO {other.gameObject.name}");
+        StartCoroutine(GameManager.gameM.CambiarEscena(1, 1f));
+    }      
 
     // ── Helpers ────────────────────────────────────────────────────────────────
     private bool HasReachedDestination()

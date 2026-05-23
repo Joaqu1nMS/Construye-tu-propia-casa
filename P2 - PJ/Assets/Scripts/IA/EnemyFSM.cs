@@ -10,7 +10,7 @@ using UnityEngine;
 public class EnemyFSM : MonoBehaviour
 {
     // ── Public State Enum ──────────────────────────────────────────────────────
-    public enum EnemyState { Patrol, Investigate, Chase, Search }
+    public enum EnemyState { Patrol, Investigate, Chase, Search, Caught }
 
     // ── Inspector ──────────────────────────────────────────────────────────────
     [Header("State Thresholds")]
