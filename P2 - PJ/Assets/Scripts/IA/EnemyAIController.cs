@@ -69,12 +69,16 @@ public class EnemyAIController : MonoBehaviour
             case EnemyFSM.EnemyState.Patrol:
                 _agent.speed = patrolSpeed;                
                 GoToNextWaypoint();
+                animator.SetBool("Walk", true);
+                animator.SetBool("Search", false);
                 break;
 
             case EnemyFSM.EnemyState.Investigate:
                 _agent.speed = investigateSpeed;
                 _lastKnownPosition = _sensor.GetPlayerPosition();
                 _agent.SetDestination(_lastKnownPosition);
+                animator.SetBool("Walk", true);
+                animator.SetBool("Search", false);
                 break;
 
             case EnemyFSM.EnemyState.Chase:
@@ -89,6 +93,8 @@ public class EnemyAIController : MonoBehaviour
                 _reachedLKP = false;
                 _searchTimer = 0f;
                 _agent.SetDestination(_lastKnownPosition);
+                animator.SetBool("Walk", false);
+                animator.SetBool("Search", true);
                 break;
         }
     }
@@ -211,9 +217,6 @@ public class EnemyAIController : MonoBehaviour
     private IEnumerator RutinaSearch()
     {        
         _fsm.animacionSearch = true;   
-
-        animator.SetBool("Walk", false);
-        animator.SetBool("Search", true);
         
         yield return StartCoroutine(LookAround(80f, 3f));
         yield return StartCoroutine(LookAround(-120f, 2f));
@@ -221,9 +224,6 @@ public class EnemyAIController : MonoBehaviour
         yield return StartCoroutine(LookAround(-170f, 2f));
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(LookAround(80f, 2f));
-
-        animator.SetBool("Walk", true);
-        animator.SetBool("Search", false);
         
         _fsm.animacionSearch = false;
     }

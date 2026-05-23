@@ -55,6 +55,16 @@ public class MenuWin : MonoBehaviour
             int total   = objectManager.ObjetosTotal();
             textoContador.text = $"Objetos robados: {robados} / {total}";
         }
+
+        Time.timeScale = 0f;
+
+        // Buscamos al jugador para bloquearlo y liberar el ratón
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            player.isBlocked = true; // Bloquea el movimiento en Update()
+            player.UnlockCursor();   // Libera el ratón para pulsar botones o escribir
+        }
     }
 
     // ══════════════════════════════════════════════════════════
