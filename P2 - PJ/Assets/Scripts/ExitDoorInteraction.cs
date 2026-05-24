@@ -57,6 +57,10 @@ public class ExitDoorInteraction : MonoBehaviour
     private bool estaAnimando = false;
     private bool mouseEncima = false;
 
+    //Rango
+    public float rango = 3f;
+    public GameObject player;
+
     // ══════════════════════════════════════════════════════════
     void Awake()
     {
@@ -73,15 +77,6 @@ public class ExitDoorInteraction : MonoBehaviour
     // ══════════════════════════════════════════════════════════
     //  OnMouse*
     // ══════════════════════════════════════════════════════════
-    void OnMouseEnter()
-    {
-        if (Time.timeScale == 0f || estaAnimando) return;
-        mouseEncima = true;
-        ActualizarTexto();
-        SetLabelActivo(true);
-        SetOutlineActivo(true);
-    }
-
     void OnMouseExit()
     {
         mouseEncima = false;
@@ -92,6 +87,20 @@ public class ExitDoorInteraction : MonoBehaviour
     void OnMouseOver()
     {
         if (Time.timeScale == 0f || estaAnimando) return;
+
+        if (Vector3.Distance(player.transform.position, transform.position) > rango)
+        {
+            // Si el jugador está fuera de rango, no mostrar UI ni permitir interacción
+            SetLabelActivo(false);
+            SetOutlineActivo(false);
+            return;
+        }else
+        {
+            mouseEncima = true;
+            ActualizarTexto();            
+            SetLabelActivo(true);
+            SetOutlineActivo(true);
+        }
 
         if (Input.GetKeyDown(KeyCode.E) && objectManager != null && objectManager.TodosRecogidos())
         {

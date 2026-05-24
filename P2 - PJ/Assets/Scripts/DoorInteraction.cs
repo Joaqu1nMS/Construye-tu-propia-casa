@@ -50,7 +50,7 @@ public class DoorInteraction : MonoBehaviour
     public string textoCerrada = "Presiona E para abrir";
     public string textoAbierta = "Presiona E para cerrar";
 
-    //rango
+    //Rango
     public float rango   = 3f;
     public GameObject player;
 
