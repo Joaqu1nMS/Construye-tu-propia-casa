@@ -12,7 +12,7 @@ public enum TipoOBjeto
     Unico
 }
 
-public class ObjectPicker : MonoBehaviour
+public partial class ObjectPicker : MonoBehaviour
 {
     private Outline lineado;
     [SerializeField] private GameObject player;
@@ -20,6 +20,7 @@ public class ObjectPicker : MonoBehaviour
     public string nombreDescripcion;
     public TipoOBjeto tipo;
     public AudioClip golpeObjeto;
+    public AudioClip pickObjeto;
 
     private MinijuegoRecogida minijuegoRecogida;
 
@@ -59,15 +60,15 @@ public class ObjectPicker : MonoBehaviour
                 {
                     if (minijuegoRecogida.HeGanado())
                     {
-                        Debug.Log("ObjetoRecogido");
+                        // Acierta - objeto recogido
+                        GameManager.gameM.ReproducirSonido(null, pickObjeto, 0.5f);
                         FindObjectOfType<ObjectManager>().HeSidoRecogido(nombreDescripcion);
                         Destroy(this.gameObject);
                     } else
                     {
-                        // REPRODUCIR SONIDO
-                        GameManager.gameM.ReproducirSonido(golpeObjeto, 0.5f);
-                        FindObjectOfType<EnemyAIController>().NotifyLoudNoise(player.transform.position);
-                        Debug.Log("CAGASTE");
+                        // Fallo - hace ruido
+                        GameManager.gameM.ReproducirSonido(null, golpeObjeto, 0.5f);
+                        FindObjectOfType<EnemyAIController>().NotifyLoudNoise(player.transform.position);                        
                     }
                     player.GetComponent<PlayerController>().isBlocked = false;
                 }
@@ -75,8 +76,7 @@ public class ObjectPicker : MonoBehaviour
         } else
         {
             lineado.enabled = false;
-        }
-        
+        }        
     }
 
     private void OnMouseExit()
@@ -85,3 +85,13 @@ public class ObjectPicker : MonoBehaviour
         lineado.enabled = false;            
     }
 }
+
+# if UNITY_EDITOR
+public partial class ObjectPicker
+{
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, alcanceRecogida);
+    }
+}
+# endif

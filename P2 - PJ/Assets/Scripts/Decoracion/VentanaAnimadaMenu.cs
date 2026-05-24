@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
+# if UNITY_EDITOR
 [CustomEditor(typeof(VentanaAnimada))]
 public class VentanaAnimadaMenu : Editor
 {
@@ -40,3 +41,4 @@ public class VentanaAnimadaMenu : Editor
         }
     }
 }
+# endif

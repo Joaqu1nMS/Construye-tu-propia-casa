@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -36,7 +38,7 @@ public class EnemyAIController : MonoBehaviour
     [SerializeField] private LayerMask puertaLayer;
     [SerializeField] private AudioClip mmm;
     [SerializeField] private AudioClip hey;
-    [SerializeField] private AudioClip pillado;
+    [SerializeField] private AudioClip pillado;    
 
     // ── Private ────────────────────────────────────────────────────────────────
     private NavMeshAgent _agent;
@@ -52,7 +54,10 @@ public class EnemyAIController : MonoBehaviour
     private float _searchTimer;
     private bool _isLookingAround;
 
-    private Coroutine _idleCoroutine;
+    private Coroutine _idleCoroutine;    
+
+    // Audio sources
+    private AudioSource pitch1;    
 
     // ── Unity ──────────────────────────────────────────────────────────────────
     private void Awake()
@@ -62,8 +67,10 @@ public class EnemyAIController : MonoBehaviour
         _fsm = GetComponent<EnemyFSM>();
         fuzzy = GetComponent<FuzzyLogicController>();
         animator = GetComponent<Animator>();
-    }
 
+        List<AudioSource> audios = GetComponents<AudioSource>().ToList();
+        pitch1 = audios[0];        
+    }
     // ── FSM Callbacks ──────────────────────────────────────────────────────────
     public void OnEnterState(EnemyFSM.EnemyState state)
     {
@@ -83,7 +90,7 @@ public class EnemyAIController : MonoBehaviour
                 break;
 
             case EnemyFSM.EnemyState.Investigate:
-                GameManager.gameM.ReproducirSonido(mmm, -1);
+                GameManager.gameM.ReproducirSonido(pitch1, mmm, -1);
                 _agent.speed = investigateSpeed;
                 _lastKnownPosition = _sensor.GetPlayerPosition();
                 _agent.SetDestination(_lastKnownPosition);
@@ -93,7 +100,7 @@ public class EnemyAIController : MonoBehaviour
 
             case EnemyFSM.EnemyState.Chase:
             
-                if (_fsm.PreviousState != EnemyFSM.EnemyState.Search) GameManager.gameM.ReproducirSonido(hey, -1);
+                if (_fsm.PreviousState != EnemyFSM.EnemyState.Search) GameManager.gameM.ReproducirSonido(pitch1, hey, -1);
                 _agent.speed = chaseSpeed;
                 animator.SetBool("Walk", true);
                 animator.SetBool("Search", false);
@@ -209,7 +216,7 @@ public class EnemyAIController : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
-    {
+    {        
         if (((1 << other.gameObject.layer) & playerLayer) == 0)
         {
             if (((1 << other.gameObject.layer) & puertaLayer) == 0)
@@ -220,7 +227,7 @@ public class EnemyAIController : MonoBehaviour
             return;
         }
 
-        GameManager.gameM.ReproducirSonido(pillado, -1);
+        GameManager.gameM.ReproducirSonido(pitch1, pillado, -1);
         FindObjectOfType<PlayerController>().isBlocked = true;
         GetComponent<EnemyFSM>().isBlocked = true;        
         _agent.SetDestination(_agent.transform.position); // Detener movimiento
@@ -266,7 +273,8 @@ public class EnemyAIController : MonoBehaviour
         yield return StartCoroutine(LookAround(80f, 2f));
 
         _fsm.animacionSearch = false;
-    }
+    }    
+    
 
     // ── Public Utility ─────────────────────────────────────────────────────────
     /// <summary>Called externally (e.g. by ObjectPicker) to notify a loud item drop.</summary>

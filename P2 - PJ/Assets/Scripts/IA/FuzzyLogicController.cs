@@ -12,7 +12,7 @@ public class FuzzyLogicController : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float suspicionIncreaseRateVisually = 35f; // Rule 2: partial vision
     [SerializeField, Range(0f, 100f)] private float suspicionIncreaseRateHearing  = 10f; // Rule 4: light hearing
     [SerializeField, Range(0f, 100f)] private float suspicionIncreaseRateLoud     = 20f; // Rule 3: continued loud noise
-    [SerializeField, Range(0f, 100f)] private float suspicionDecayRate            = 5f; // Rule 5: silent + no vision
+    [SerializeField, Range(0f, 100f)] private float suspicionDecayRate            = 1f; // Rule 5: silent + no vision
 
     [Header("Suspicion Freeze")]
     [Tooltip("In SEARCH state the decay is slowed to this fraction of the normal decay rate.")]

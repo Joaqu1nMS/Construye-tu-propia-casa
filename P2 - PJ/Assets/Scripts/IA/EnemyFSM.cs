@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,14 +9,14 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(EnemyAIController))]
 [RequireComponent(typeof(FuzzyLogicController))]
-public class EnemyFSM : MonoBehaviour
+public partial class EnemyFSM : MonoBehaviour
 {
     // ── Public State Enum ──────────────────────────────────────────────────────
     public enum EnemyState { Patrol, Investigate, Chase, Search, Caught }
 
     // ── Inspector ──────────────────────────────────────────────────────────────
     [Header("State Thresholds")]
-    [SerializeField, Range(0f, 100f)] public float investigateThreshold = 40f;
+    [SerializeField, Range(0f, 100f)] public float investigateThreshold = 20f;
     [SerializeField, Range(0f, 100f)] public float chaseThreshold = 75f;
 
     [Header("Debug")]
@@ -36,7 +38,7 @@ public class EnemyFSM : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<EnemyAIController>();
-        _fuzzy      = GetComponent<FuzzyLogicController>();
+        _fuzzy      = GetComponent<FuzzyLogicController>();        
     }
 
     private void Start() => EnterState(EnemyState.Patrol);
@@ -46,6 +48,7 @@ public class EnemyFSM : MonoBehaviour
         if(isBlocked)
         {
             StopAllCoroutines();
+            
             return;
         }
         
@@ -116,10 +119,15 @@ public class EnemyFSM : MonoBehaviour
     }
 
     private void EnterState(EnemyState state)  => _controller.OnEnterState(state);
-    private void ExitState(EnemyState state)   => _controller.OnExitState(state);
+    private void ExitState(EnemyState state)   => _controller.OnExitState(state);    
+}
 
+# if UNITY_EDITOR
+public partial class EnemyFSM
+{
     void OnDrawGizmos()
     {
         if (Application.isPlaying) Handles.Label(transform.position + Vector3.up * 3, $"Sospecha: {_fuzzy.SuspicionLevel}");
     }
 }
+# endif

@@ -61,6 +61,11 @@ public class DoorInteraction : MonoBehaviour
     public float anguloAbierta  = 130f;
     public float duracionAnim   = 1.2f;
 
+    [Header("Sonidos")]
+    public AudioClip abrir;
+    public AudioClip cerrar;
+    public AudioSource audioSource;
+
     // ─── ESTADO INTERNO ───────────────────────────────────────
     private Outline outline;
     private bool estaAbierta  = false;
@@ -72,6 +77,7 @@ public class DoorInteraction : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<PlayerController>().gameObject; 
         outline = GetComponent<Outline>();
+        audioSource = GetComponent<AudioSource>();
 
         if (doorCollider == null) doorCollider = GetComponent<Collider>();
         if (doorPivot    == null) doorPivot    = transform.parent;
@@ -140,9 +146,13 @@ public class DoorInteraction : MonoBehaviour
             SetOutlineActivo(false);
 
             if (estaAbierta)
+            {                
                 StartCoroutine(AnimarPuerta(anguloAbierta, anguloCerrada));
+            }                
             else
-                StartCoroutine(AnimarPuerta(anguloCerrada, anguloAbierta));
+            {                
+                StartCoroutine(AnimarPuerta(anguloCerrada, anguloAbierta));                                
+            }
         }
     }
 
@@ -164,6 +174,7 @@ public class DoorInteraction : MonoBehaviour
 
         float t = 0f;
 
+        if (!estaAbierta) ReproducirSonido(abrir);
         while (t < duracionAnim)
         {
             t += Time.deltaTime;
@@ -173,8 +184,10 @@ public class DoorInteraction : MonoBehaviour
             float smooth = progress * progress * (3f - 2f * progress);
 
             doorPivot.localRotation = Quaternion.Lerp(rotInicio, rotFin, smooth);
+            if (t >= duracionAnim && estaAbierta) ReproducirSonido(cerrar);
             yield return null;
         }
+        
 
         // 2. Posición exacta al terminar
         doorPivot.localRotation = rotFin;
@@ -238,5 +251,13 @@ public class DoorInteraction : MonoBehaviour
         Gizmos.color = Color.yellow;
         if (doorPivot != null)
             Gizmos.DrawWireSphere(doorPivot.position, 0.1f);
+    }
+
+    private void ReproducirSonido(AudioClip sfx)
+    {
+        audioSource.volume = GameManager.gameM.SFX.volume;
+        audioSource.pitch = 1; // variación de pitch opcional
+        audioSource.clip = sfx;
+        audioSource.Play();
     }
 }

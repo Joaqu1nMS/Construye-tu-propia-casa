@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 /// ============================================================
 ///  ExitDoorInteraction.cs  —  Puerta de salida / victoria
@@ -106,7 +107,8 @@ public class ExitDoorInteraction : MonoBehaviour
     IEnumerator SecuenciaVictoria()
     {
         estaAnimando = true;
-
+        FindObjectOfType<EnemyFSM>().GetComponents<CapsuleCollider>().FirstOrDefault(x => x.isTrigger).enabled = false;
+        FindObjectOfType<PlayerController>().isBlocked = true;
         // Pausar y dejar que Cronometro gestione el ranking y el panel
 
         if (cronometro != null)

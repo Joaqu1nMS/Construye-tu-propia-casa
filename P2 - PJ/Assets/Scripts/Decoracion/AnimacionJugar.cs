@@ -46,21 +46,21 @@ public class AnimacionJugar : MonoBehaviour
     private IEnumerator Animacion()
     {
         yield return new WaitForSeconds(duracion * 1 / 5);
-        GameManager.gameM.ReproducirSonido(switchLight, 0.5f);
+        GameManager.gameM.ReproducirSonido(null, switchLight, 0.5f);
         foreach (VentanaAnimada v in cuarto.GetComponentsInChildren<VentanaAnimada>())
         {
             v.TurnOn();
         }
 
         yield return new WaitForSeconds(duracion * 2 / 5);
-        GameManager.gameM.ReproducirSonido(switchLight, 0.5f);
+        GameManager.gameM.ReproducirSonido(null, switchLight, 0.5f);
         foreach (VentanaAnimada v in salon.GetComponentsInChildren<VentanaAnimada>())
         {
             v.TurnOff();
         }
 
         yield return new WaitForSeconds(duracion * 2 / 5);
-        GameManager.gameM.ReproducirSonido(switchLight, 0.5f);
+        GameManager.gameM.ReproducirSonido(null, switchLight, 0.5f);
         foreach (VentanaAnimada v in cuarto.GetComponentsInChildren<VentanaAnimada>())
         {
             v.TurnOff();

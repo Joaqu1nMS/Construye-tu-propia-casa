@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -72,6 +73,10 @@ public class PlayerController : MonoBehaviour
     private bool _isSprinting;
     private float _targetHeight;
 
+    private AudioSource audioSource;
+    private Coroutine pasosCoroutine;
+    [SerializeField] private AudioClip paso;
+
     // ──────────────────────────────────────────────
     //  Unity Lifecycle
     // ──────────────────────────────────────────────
@@ -90,10 +95,26 @@ public class PlayerController : MonoBehaviour
 
         _targetHeight = standHeight;
         _cc.height = standHeight;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
+        bool moviendose = CurrentMoveState != MoveState.Idle && CurrentMoveState != MoveState.Crouch;
+        Debug.Log($"Supuesto estado {CurrentMoveState}");
+        if (moviendose && pasosCoroutine == null)
+        {
+            Debug.Log("Inicio coroutina");
+            pasosCoroutine = StartCoroutine(SonidoPasos());
+        }
+        else if (!moviendose && pasosCoroutine != null)
+        {
+            Debug.Log("Borro coroutina");
+            StopCoroutine(pasosCoroutine);
+            pasosCoroutine = null;
+        }
+
         if (isBlocked) {
             _cc.Move(Vector3.zero); 
             return;
@@ -229,6 +250,35 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private IEnumerator SonidoPasos()
+    {
+        while (true)
+        {
+            // Capturamos el estado una sola vez para esta iteración
+            MoveState estadoActual = CurrentMoveState;
+
+            if (estadoActual != MoveState.Walk && estadoActual != MoveState.Run)
+            {
+                // Estado inválido para pasos, salimos limpiamente
+                pasosCoroutine = null;
+                yield break;
+            }
+
+            ReproducirSonido(paso);
+
+            float espera = estadoActual == MoveState.Run ? 0.2f : 0.5f;
+            yield return new WaitForSeconds(espera);
+        }
+    }
+
+    private void ReproducirSonido(AudioClip sfx)
+    {
+        audioSource.volume = GameManager.gameM.SFX.volume;
+        audioSource.pitch = Random.Range(0.9f, 1.5f);        
+        audioSource.clip = sfx;
+        audioSource.Play();
     }
 
     // ──────────────────────────────────────────────

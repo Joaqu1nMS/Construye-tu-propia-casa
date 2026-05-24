@@ -26,8 +26,7 @@ public class GameManager : MonoBehaviour
         if (SFX != null)
             SFX.volume = PlayerPrefs.GetFloat("VolumenSFX", 0.5f);
         
-        fade = GetComponentInChildren<FadeInOut>();
-        //StartCoroutine(Prye());
+        fade = GetComponentInChildren<FadeInOut>();        
     }
 
     void Update()
@@ -97,19 +96,24 @@ public class GameManager : MonoBehaviour
         SFX.PlayOneShot(botonPresionado);
     }
 
-    public void ReproducirSonido(AudioClip sonido, float pitchMin)
+    public void ReproducirSonido(AudioSource source, AudioClip sonido, float pitchMin)
     {
-        
         System.Random r = new System.Random();
-        if (pitchMin != -1) SFX.pitch = 0.8f + pitchMin + (float)r.NextDouble();
-        else SFX.pitch = 1;
-        SFX.PlayOneShot(sonido);
-    }
-
-    private IEnumerator Prye()
-    {
-        yield return StartCoroutine(fade.FadeIn(1f));
-        yield return StartCoroutine(fade.FadeOut(1f));
+        if (source == null)
+        {
+            SFX.pitch = 1;
+            
+            if (pitchMin != -1) SFX.pitch = 0.8f + pitchMin + (float)r.NextDouble();
+            SFX.PlayOneShot(sonido);
+        } else
+        {
+            source.volume = SFX.volume;
+            source.pitch = 1;
+            
+            if (pitchMin != -1) source.pitch = 0.8f + pitchMin + (float)r.NextDouble();
+            source.PlayOneShot(sonido);
+        }
+        
     }
 
     public IEnumerator CambiarEscena(int index, float duracionFade)
