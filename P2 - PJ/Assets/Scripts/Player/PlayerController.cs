@@ -2,18 +2,10 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-/// <summary>
-/// First-person player controller.
-/// Requires: CharacterController component on the same GameObject.
-/// The Camera must be a child of this GameObject (assigned in Inspector).
-/// </summary>
+
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    // ──────────────────────────────────────────────
-    //  Inspector Settings
-    // ──────────────────────────────────────────────
-
     public enum MoveState { Idle, Walk, Run, Crouch }
     public MoveState CurrentMoveState { get; private set; }
 
@@ -62,13 +54,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("How fast the player transitions between crouch and stand.")]
     public float crouchTransitionSpeed = 10f;
 
-    // ──────────────────────────────────────────────
-    //  Private State
-    // ──────────────────────────────────────────────
-
     private CharacterController _cc;
-    private Vector3 _velocity;          // accumulated movement vector
-    private float _verticalLookAngle;   // camera pitch tracker
+    private Vector3 _velocity;          
+    private float _verticalLookAngle;  
     private bool _isCrouching;
     private bool _isSprinting;
     private float _targetHeight;
@@ -77,9 +65,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine pasosCoroutine;
     [SerializeField] private AudioClip paso;
 
-    // ──────────────────────────────────────────────
-    //  Unity Lifecycle
-    // ──────────────────────────────────────────────
+
     public bool isBlocked = false;
 
     private void Awake()
@@ -89,7 +75,6 @@ public class PlayerController : MonoBehaviour
         if (playerCamera == null)
             playerCamera = GetComponentInChildren<Camera>();
 
-        // Lock and hide cursor for FPS feel
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -122,7 +107,7 @@ public class PlayerController : MonoBehaviour
         
         if (Time.timeScale == 0f)
         {
-            crosshairRadius = 0f; // Hide crosshair when paused
+            crosshairRadius = 0f; // quitar mira cuando pausa
             return;
         }
         crosshairRadius = 4f;
@@ -131,10 +116,7 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
     }
 
-    // ──────────────────────────────────────────────
-    //  Mouse Look
-    // ──────────────────────────────────────────────
-
+    //raton
     private void HandleMouseLook()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
@@ -149,10 +131,7 @@ public class PlayerController : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(_verticalLookAngle, 0f, 0f);
     }
 
-    // ──────────────────────────────────────────────
-    //  Movement & Jump
-    // ──────────────────────────────────────────────
-
+    //movimiento y salto
     private void HandleMovement()
     {
         bool grounded = _cc.isGrounded;
@@ -179,12 +158,11 @@ public class PlayerController : MonoBehaviour
 
         _cc.Move(_velocity * Time.deltaTime);
 
-        // 2. AÑADE ESTO AL FINAL DE HandleMovement: Calculamos el estado actual
         if (_isCrouching)
         {
             CurrentMoveState = MoveState.Crouch;
         }
-        else if (horizontal != 0 || vertical != 0) // Si se está moviendo
+        else if (horizontal != 0 || vertical != 0) 
         {
             CurrentMoveState = _isSprinting ? MoveState.Run : MoveState.Walk;
         }
@@ -194,15 +172,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ──────────────────────────────────────────────
-    //  Crouch
-    // ──────────────────────────────────────────────
-
     private void HandleCrouch()
     {
         bool crouchPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        // Prevent standing if something is overhead
         if (!crouchPressed && _isCrouching && CanStandUp())
             _isCrouching = false;
         else if (crouchPressed)
@@ -210,23 +183,19 @@ public class PlayerController : MonoBehaviour
 
         _targetHeight = _isCrouching ? crouchHeight : standHeight;
 
-        // Smoothly lerp CharacterController height
         if (!Mathf.Approximately(_cc.height, _targetHeight))
         {
             float newHeight = Mathf.Lerp(_cc.height, _targetHeight, crouchTransitionSpeed * Time.deltaTime);
             float heightDelta = newHeight - _cc.height;
 
-            // Adjust center so feet stay on the ground
             _cc.center = new Vector3(0f, _cc.center.y + heightDelta / 2f, 0f);
             _cc.height = newHeight;
 
-            // Move camera to match new eye level
             Vector3 camLocal = playerCamera.transform.localPosition;
             playerCamera.transform.localPosition = new Vector3(camLocal.x, _cc.height * 0.9f, camLocal.z);
         }
     }
 
-    /// <summary>Returns true if there is no obstacle preventing the player from standing.</summary>
     private bool CanStandUp()
     {
         Vector3 origin = transform.position + Vector3.up * (_cc.height / 2f);
@@ -234,18 +203,12 @@ public class PlayerController : MonoBehaviour
         return !Physics.SphereCast(origin, _cc.radius * 0.9f, Vector3.up, out _, checkDistance);
     }
 
-    // ──────────────────────────────────────────────
-    //  Public Helpers
-    // ──────────────────────────────────────────────
-
-    /// <summary>Unlock the cursor (e.g., for UI menus).</summary>
     public void UnlockCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
-    /// <summary>Re-lock the cursor after a menu closes.</summary>
     public void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -256,12 +219,10 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            // Capturamos el estado una sola vez para esta iteración
             MoveState estadoActual = CurrentMoveState;
 
             if (estadoActual != MoveState.Walk && estadoActual != MoveState.Run)
             {
-                // Estado inválido para pasos, salimos limpiamente
                 pasosCoroutine = null;
                 yield break;
             }
@@ -281,10 +242,6 @@ public class PlayerController : MonoBehaviour
         audioSource.Play();
     }
 
-    // ──────────────────────────────────────────────
-    //  Crosshair
-    // ──────────────────────────────────────────────
-
     private void OnGUI()
     {
         float cx = Screen.width * 0.5f;
@@ -292,12 +249,10 @@ public class PlayerController : MonoBehaviour
         float diameter = crosshairRadius * 2f;
 
         GUI.color = crosshairColor;
-        // DrawTexture expects a Rect; we draw a filled square and let the
-        // circular shape be implied by its small size (4 px radius ≈ dot).
         GUI.DrawTexture(
             new Rect(cx - crosshairRadius, cy - crosshairRadius, diameter, diameter),
             Texture2D.whiteTexture
         );
-        GUI.color = Color.white; // Reset so other GUI elements are unaffected
+        GUI.color = Color.white; 
     }
 }

@@ -3,64 +3,38 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-/// ============================================================
-///  Cronometro.cs  —  Versión juego de robo (1 nivel, 1 ranking)
-/// ============================================================
-///
-///  SETUP
-///  ─────────────────────────────────────────────────────────
-///  1. Añade este script a cualquier GameObject persistente
-///     (o al mismo Canvas del HUD).
-///  2. En el Inspector asigna:
-///       • textoTiempo       → TMP_Text del HUD (tiempo en curso)
-///       • textoMenuWin      → TMP_Text dentro del panel de victoria
-///                             que muestra el tiempo final
-///       • panelNombre       → Panel para pedir nombre si es récord
-///       • inputNombre       → TMP_InputField del panel anterior
-///       • botonGuardar      → Botón "Guardar" del panel anterior
-///       • panelVictoriaNormal → Panel principal de victoria (MenuWin)
-///
-///  FLUJO:
-///   ExitDoorInteraction llama a DetenerYComprobarRecord()
-///   → Si entra en Top 5 → panelNombre (pide nombre) → guarda → panelVictoriaNormal
-///   → Si no entra       → panelVictoriaNormal directamente
-/// ============================================================
-
 public class Cronometro : MonoBehaviour
 {
-    // ─── HUD ──────────────────────────────────────────────────
     [Header("Interfaz HUD")]
     [SerializeField] private TextMeshProUGUI textoTiempo;
 
-    // ─── PANEL VICTORIA ───────────────────────────────────────
+    // PANEL VICTORIA
     [Header("Panel Victoria")]
     [SerializeField] private TextMeshProUGUI textoMenuWin;
     [SerializeField] private GameObject panelVictoriaNormal;
 
-    // ─── PANEL RÉCORD ─────────────────────────────────────────
+    // PANEL RÉCORD 
     [Header("Panel Nuevo Récord")]
-    [SerializeField] private GameObject    panelNombre;
+    [SerializeField] private GameObject panelNombre;
     [SerializeField] private TMP_InputField inputNombre;
-    [SerializeField] private Button        botonGuardar;
+    [SerializeField] private Button botonGuardar;
 
-    // ─── CONSTANTES ───────────────────────────────────────────
+    // CONSTANTES
     private const string CLAVE_RANKING = "Ranking_Robo";
-    private const int    MAX_SCORES    = 5;
+    private const int MAX_SCORES = 5;
 
-    // ─── ESTADO ───────────────────────────────────────────────
-    private float tiempoActual  = 0f;
-    private bool  estaCorriendo = false;
+    //ESTADO 
+    private float tiempoActual = 0f;
+    private bool estaCorriendo = false;
 
-    // ── API pública: el tiempo para MenuWin ───────────────────
     public float TiempoFinal => tiempoActual;
 
-    // ══════════════════════════════════════════════════════════
     void Start()
     {
-        tiempoActual  = 0f;
+        tiempoActual = 0f;
         estaCorriendo = true;
 
-        if (panelNombre        != null) panelNombre.SetActive(false);
+        if (panelNombre != null) panelNombre.SetActive(false);
         if (panelVictoriaNormal != null) panelVictoriaNormal.SetActive(false);
     }
 
@@ -71,20 +45,12 @@ public class Cronometro : MonoBehaviour
         ActualizarTextoHUD();
     }
 
-    // ══════════════════════════════════════════════════════════
-    //  API PÚBLICA — llamada desde ExitDoorInteraction
-    // ══════════════════════════════════════════════════════════
-
-    /// <summary>
-    /// Para el cronómetro y comprueba si el tiempo es Top 5.
-    /// Abre el panel de nombre si es récord, o muestra victoria directamente.
-    /// </summary>
     public void DetenerYComprobarRecord()
     {
         if (!estaCorriendo) return;
         estaCorriendo = false;
 
-        // Actualizar el texto del tiempo final en el panel de victoria
+        // Actualizo texto del tiempo final en el panel de victoria
         if (textoMenuWin != null)
             textoMenuWin.text = FormatearTiempo(tiempoActual);
 
@@ -98,10 +64,6 @@ public class Cronometro : MonoBehaviour
         else
             MostrarVictoriaNormal();
     }
-
-    // ══════════════════════════════════════════════════════════
-    //  INTERNOS
-    // ══════════════════════════════════════════════════════════
     private void ActualizarTextoHUD()
     {
         if (textoTiempo != null)
@@ -145,7 +107,6 @@ public class Cronometro : MonoBehaviour
         if (panelVictoriaNormal != null) panelVictoriaNormal.SetActive(true);
     }
 
-    // ── Persistencia ──────────────────────────────────────────
     private List<ScoreEntry> CargarScores()
     {
         var lista = new List<ScoreEntry>();
@@ -176,15 +137,15 @@ public class Cronometro : MonoBehaviour
 
     private string FormatearTiempo(float t)
     {
-        int min  = Mathf.FloorToInt(t / 60f);
-        int sec  = Mathf.FloorToInt(t % 60f);
-        int ms   = Mathf.FloorToInt((t * 100f) % 100f);
+        int min = Mathf.FloorToInt(t / 60f);
+        int sec = Mathf.FloorToInt(t % 60f);
+        int ms = Mathf.FloorToInt((t * 100f) % 100f);
         return string.Format("{0:00}:{1:00}:{2:00}", min, sec, ms);
     }
 
     private class ScoreEntry
     {
         public string nombre;
-        public float  tiempo;
+        public float tiempo;
     }
 }

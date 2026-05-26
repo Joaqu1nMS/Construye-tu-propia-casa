@@ -9,7 +9,6 @@ public class MenuGameOver : MonoBehaviour
     [SerializeField] private Button botonReintentar;
     [SerializeField] private Button botonMenuPrincipal;    
 
-    // Start is called before the first frame update
     void Start()
     {
         botonReintentar.onClick.AddListener(() => Reintentar());

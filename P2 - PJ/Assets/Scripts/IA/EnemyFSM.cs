@@ -3,18 +3,13 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-/// <summary>
-/// Core Finite State Machine for the Enemy AI.
-/// Manages state transitions based on Suspicion Level output from FuzzyLogicController.
-/// </summary>
 [RequireComponent(typeof(EnemyAIController))]
 [RequireComponent(typeof(FuzzyLogicController))]
 public partial class EnemyFSM : MonoBehaviour
 {
-    // ── Public State Enum ──────────────────────────────────────────────────────
     public enum EnemyState { Patrol, Investigate, Chase, Search, Caught }
 
-    // ── Inspector ──────────────────────────────────────────────────────────────
+    // Inspector
     [Header("State Thresholds")]
     [SerializeField, Range(0f, 100f)] public float investigateThreshold = 20f;
     [SerializeField, Range(0f, 100f)] public float chaseThreshold = 75f;
@@ -22,23 +17,20 @@ public partial class EnemyFSM : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool showDebugLogs = false;
 
-    // ── State Accessors ────────────────────────────────────────────────────────
+    // State Accessors
     public EnemyState CurrentState  { get; private set; } = EnemyState.Patrol;
     public EnemyState PreviousState { get; private set; } = EnemyState.Patrol;
-
-    // ── Private References ─────────────────────────────────────────────────────
-    private EnemyAIController  _controller;
-    private FuzzyLogicController _fuzzy;
+    private EnemyAIController  controller;
+    private FuzzyLogicController fuzzy;
 
     private float chaseCooldown; 
     public bool animacionSearch = false;
     public bool isBlocked = false;
 
-    // ── Unity ──────────────────────────────────────────────────────────────────
     private void Awake()
     {
-        _controller = GetComponent<EnemyAIController>();
-        _fuzzy      = GetComponent<FuzzyLogicController>();        
+        controller = GetComponent<EnemyAIController>();
+        fuzzy      = GetComponent<FuzzyLogicController>();        
     }
 
     private void Start() => EnterState(EnemyState.Patrol);
@@ -53,15 +45,15 @@ public partial class EnemyFSM : MonoBehaviour
         }
         
         EvaluateTransitions();
-        _controller.ExecuteState(CurrentState);
+        controller.ExecuteState(CurrentState);
         Debug.Log(CurrentState);
     }
 
-    // ── Transition Logic ───────────────────────────────────────────────────────
+    // Transition Logic 
     private void EvaluateTransitions()
     {
-        float s = _fuzzy.SuspicionLevel;
-        bool  hasLOS = _fuzzy.VisionValue >= 1f;
+        float s = fuzzy.SuspicionLevel;
+        bool  hasLOS = fuzzy.VisionValue >= 1f;
 
         switch (CurrentState)
         {
@@ -96,7 +88,7 @@ public partial class EnemyFSM : MonoBehaviour
                 if (hasLOS)
                 {
                     Debug.Log("JUGADOR VISTO.");
-                    _fuzzy.SetSuspicion(100f);
+                    fuzzy.SetSuspicion(100f);
                     TransitionTo(EnemyState.Chase);
                 }
                 else if (s < chaseThreshold && s > investigateThreshold) TransitionTo(EnemyState.Investigate);
@@ -118,8 +110,8 @@ public partial class EnemyFSM : MonoBehaviour
             Debug.Log($"[FSM] {PreviousState} → {CurrentState}  |  S={_fuzzy.SuspicionLevel:F1}");*/
     }
 
-    private void EnterState(EnemyState state)  => _controller.OnEnterState(state);
-    private void ExitState(EnemyState state)   => _controller.OnExitState(state);    
+    private void EnterState(EnemyState state)  => controller.OnEnterState(state);
+    private void ExitState(EnemyState state)   => controller.OnExitState(state);    
 }
 
 # if UNITY_EDITOR
@@ -127,7 +119,7 @@ public partial class EnemyFSM
 {
     void OnDrawGizmos()
     {
-        if (Application.isPlaying) Handles.Label(transform.position + Vector3.up * 3, $"Sospecha: {_fuzzy.SuspicionLevel}");
+        if (Application.isPlaying) Handles.Label(transform.position + Vector3.up * 3, $"Sospecha: {fuzzy.SuspicionLevel}");
     }
 }
 # endif

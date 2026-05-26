@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Optional in-editor runtime HUD. Attach alongside the other enemy components.
-/// Displays live V, R, S values and the current FSM state.
-/// Disable the component in builds to remove overhead.
-/// </summary>
 [RequireComponent(typeof(FuzzyLogicController))]
 [RequireComponent(typeof(EnemyFSM))]
 public class EnemyDebugHUD : MonoBehaviour
@@ -12,28 +7,28 @@ public class EnemyDebugHUD : MonoBehaviour
     [SerializeField] private bool showHUD = true;
     [SerializeField] private Vector2 hudPosition = new Vector2(10f, 10f);
 
-    private FuzzyLogicController _fuzzy;
-    private EnemyFSM             _fsm;
+    private FuzzyLogicController fuzzy;
+    private EnemyFSM             fsm;
 
-    private readonly Color _colorLow    = new Color(0.2f, 0.8f, 0.2f);
-    private readonly Color _colorMedium = new Color(1.0f, 0.7f, 0.0f);
-    private readonly Color _colorHigh   = new Color(0.9f, 0.1f, 0.1f);
+    private readonly Color colorLow    = new Color(0.2f, 0.8f, 0.2f);
+    private readonly Color colorMedium = new Color(1.0f, 0.7f, 0.0f);
+    private readonly Color colorHigh   = new Color(0.9f, 0.1f, 0.1f);
 
     private void Awake()
     {
-        _fuzzy = GetComponent<FuzzyLogicController>();
-        _fsm   = GetComponent<EnemyFSM>();
+        fuzzy = GetComponent<FuzzyLogicController>();
+        fsm   = GetComponent<EnemyFSM>();
     }
 
     private void OnGUI()
     {
-        if (!showHUD || _fuzzy == null) return;
+        if (!showHUD || fuzzy == null) return;
 
-        float s     = _fuzzy.SuspicionLevel;
-        float v     = _fuzzy.VisionValue;
-        float r     = _fuzzy.NoiseValue;
-        string label = _fuzzy.GetSuspicionLabel();
-        string state = _fsm.CurrentState.ToString();
+        float s     = fuzzy.SuspicionLevel;
+        float v     = fuzzy.VisionValue;
+        float r     = fuzzy.NoiseValue;
+        string label = fuzzy.GetSuspicionLabel();
+        string state = fsm.CurrentState.ToString();
 
         GUIStyle boxStyle = new GUIStyle(GUI.skin.box)   { fontSize = 13 };
         GUIStyle lblStyle = new GUIStyle(GUI.skin.label) { fontSize = 13 };
@@ -80,12 +75,11 @@ public class EnemyDebugHUD : MonoBehaviour
         GUI.color  = prev;
     }
 
-    // ── Helpers ────────────────────────────────────────────────────────────────
     private Color SuspicionColor(float s)
     {
-        if (s < 40f) return _colorLow;
-        if (s < 75f) return _colorMedium;
-        return _colorHigh;
+        if (s < 40f) return colorLow;
+        if (s < 75f) return colorMedium;
+        return colorHigh;
     }
 
     private static string VisionLabel(float v)
