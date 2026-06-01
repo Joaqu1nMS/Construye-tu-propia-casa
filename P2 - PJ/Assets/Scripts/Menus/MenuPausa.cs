@@ -26,7 +26,7 @@ public class MenuPausa : MonoBehaviour
             scriptOpciones = menuOpciones.GetComponent<MenuOpciones>();
         }
 
-        // Asegurarnos de que al empezar el juego, el ratón esté bloqueado y oculto
+        // Asegurarnos de que al empezar el juego, el raton esto bloqueado y oculto
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -57,11 +57,11 @@ public class MenuPausa : MonoBehaviour
         if (menu != null) menu.SetActive(true);
         Time.timeScale = 0; // Congela el juego
         
-        // Liberar y mostrar el ratón
+        // Liberar y mostrar el raton
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        GameManager.gameM?.TogglePause(); // Pausa la música
+        GameManager.gameM?.TogglePause(); // Pausa la musica
     }
 
     private void Reanudar()
@@ -69,18 +69,18 @@ public class MenuPausa : MonoBehaviour
         menuActivo = false;
         if (menu != null) menu.SetActive(false);
         
-        // Cerramos también el menú de opciones si estuviera abierto
+        // Cerramos tambien el menu de opciones si estuviera abierto
         if (menuOpciones != null) menuOpciones.SetActive(false);
         if (scriptOpciones != null) scriptOpciones.CerrarControles();
 
         Time.timeScale = 1; // Descongela el juego
 
-        // Volver a bloquear y ocultar el ratón
+        // Volver a bloquear y ocultar el raton
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         GameManager.gameM?.BotonPresionadoSFX();
-        GameManager.gameM?.TogglePause(); // Reanuda la música
+        GameManager.gameM?.TogglePause(); // Reanuda la musica
     }
 
     private void ActivarOpciones()

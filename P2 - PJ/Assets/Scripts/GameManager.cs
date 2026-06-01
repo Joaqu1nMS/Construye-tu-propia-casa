@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Asegurarse de que el GameManager aplique el volumen guardado nada más abrir el juego
+        // Asegurarse de que el GameManager aplique el volumen guardado nada mas abrir el juego
         if (music != null)
             music.volume = PlayerPrefs.GetFloat("VolumenMusica", 0.5f);
 
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         // Resetear datos
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.B))
         {
-            Debug.Log("Reset datos");
+            //Debug.Log("Reset datos");
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
         }
@@ -118,12 +118,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator CambiarEscena(int index, float duracionFade)
     {
-        Debug.Log("Cambio escena");
+        //Debug.Log("Cambio escena");
         yield return StartCoroutine(fade.FadeIn(duracionFade));
         yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene(index);        
         
-        Debug.Log("FADE OUT");
+        //Debug.Log("FADE OUT");
         yield return StartCoroutine(fade.FadeOut(duracionFade));
     }    
 }

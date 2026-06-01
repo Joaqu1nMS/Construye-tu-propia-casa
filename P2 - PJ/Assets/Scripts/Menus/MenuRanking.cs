@@ -10,13 +10,13 @@ public class MenuRanking : MonoBehaviour
 
     void Start()
     {
-        // El botón solo necesita que le asignemos la función una vez al iniciar el juego
+        // El boton solo necesita que le asignemos la funcion una vez al iniciar el juego
         volverRanking.onClick.AddListener(() => Cerrar());
     }
 
     void OnEnable()
     {
-        // Cada vez que este panel se active (SetActive(true)), se actualizarán los textos
+        // Cada vez que este panel se active, se actualizaran los textos
         ActualizarTextosRanking();
     }
 
@@ -49,9 +49,7 @@ public class MenuRanking : MonoBehaviour
             string[] partes = entradas[i].Split(':');
             if (partes.Length == 2)
             {
-                string nombre = partes[0];
-                
-                // 2. MODIFICA ESTA LÍNEA
+                string nombre = partes[0];                
                 float tiempo = float.Parse(partes[1], CultureInfo.InvariantCulture);
 
                 // Formato -> 1. Juan: 00:10:22

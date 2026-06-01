@@ -17,8 +17,8 @@ public class ObjectManager : MonoBehaviour
     public GameObject notas;
     public GameObject prefabTexto;
     
-    private int objetosRecogidos = 0;   // cuántos se han cogido ya
-    private int objetosTotal = 0;   // cuántos había que coger
+    private int objetosRecogidos = 0; // cuantos se han cogido ya
+    private int objetosTotal = 0; // cuantos había que coger
     
     void Start()
     {
@@ -51,7 +51,7 @@ public class ObjectManager : MonoBehaviour
             pickeables[randomIndex] = temp;
         }
 
-        // Seleccionar cuáles quedan activos respetando la regla de unicidad
+        // Seleccionar cuales quedan activos respetando la regla de unicidad
         HashSet<TipoOBjeto> tiposYaElegidos = new HashSet<TipoOBjeto>();
         List<GameObject> seleccionados = new List<GameObject>();
 
@@ -62,7 +62,7 @@ public class ObjectManager : MonoBehaviour
             ObjectPicker op = obj.GetComponent<ObjectPicker>();
             if (op == null) continue;
 
-            // Si no es Unico y ya cogimos uno de ese tipo, descartarlo
+            // Si no es unico y ya cogimos uno de ese tipo, descartarlo
             if (op.tipo != TipoOBjeto.Unico && tiposYaElegidos.Contains(op.tipo))
             {
                 op.enabled = false;

@@ -14,22 +14,7 @@ public class MinijuegoRecogida : MonoBehaviour
     void Start()
     {
         CerrarMinijuego();
-    }    
-
-    /*// Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!juegoAbierto)
-            {
-                IniciarMinijuego();
-            } else
-            {
-                CerrarMinijuego();
-            }
-        }
-    }*/
+    }
 
     public void IniciarMinijuego()
     {
@@ -45,7 +30,7 @@ public class MinijuegoRecogida : MonoBehaviour
         size.x = Random.Range(50f, 200f);
         zonaValida.sizeDelta = size;
 
-        //Posicion de zona valida
+        // Posicion de zona valida
         float posIni = -rTransformBarra.rect.width / 2 + zonaValida.rect.width / 2f;        
         float posFin = rTransformBarra.rect.width / 2 - zonaValida.rect.width / 2f;
         Vector2 pos = zonaValida.anchoredPosition;

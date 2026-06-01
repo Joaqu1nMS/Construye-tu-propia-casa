@@ -68,7 +68,7 @@ public partial class ObjectPicker : MonoBehaviour
                     {
                         // Fallo - hace ruido
                         GameManager.gameM.ReproducirSonido(null, golpeObjeto, 0.5f);
-                        FindObjectOfType<EnemyAIController>().NotifyLoudNoise(player.transform.position);                        
+                        FindObjectOfType<EnemyAIController>().NotificarSonido(player.transform.position);                        
                     }
                     player.GetComponent<PlayerController>().isBlocked = false;
                 }

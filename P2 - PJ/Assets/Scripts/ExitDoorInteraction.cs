@@ -14,7 +14,7 @@ public class ExitDoorInteraction : MonoBehaviour
     public Cronometro cronometro;
     public GameObject menuWin;
 
-    [Header("Label UI (World Space Canvas)")]
+    [Header("UI")]
     public GameObject labelCanvas;
     public TMP_Text labelText;
 
@@ -47,8 +47,7 @@ public class ExitDoorInteraction : MonoBehaviour
     }
 
     void OnMouseExit()
-    {
-        mouseEncima = false;
+    {        
         SetLabelActivo(false);
         SetOutlineActivo(false);
     }
@@ -59,14 +58,13 @@ public class ExitDoorInteraction : MonoBehaviour
 
         if (Vector3.Distance(player.transform.position, transform.position) > rango)
         {
-            // Si el jugador está fuera de rango, no mostrar UI ni permitir interacción
+            // Si el jugador esta fuera de rango, no mostrar UI ni permitir interacción
             SetLabelActivo(false);
             SetOutlineActivo(false);
             return;
         }else
-        {
-            mouseEncima = true;
-            ActualizarTexto();            
+        {            
+            ActualizarTexto();
             SetLabelActivo(true);
             SetOutlineActivo(true);
         }

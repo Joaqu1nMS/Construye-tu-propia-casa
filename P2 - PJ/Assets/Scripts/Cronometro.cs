@@ -13,8 +13,8 @@ public class Cronometro : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textoMenuWin;
     [SerializeField] private GameObject panelVictoriaNormal;
 
-    // PANEL RÉCORD 
-    [Header("Panel Nuevo Récord")]
+    // PANEL RECORD 
+    [Header("Panel Nuevo Record")]
     [SerializeField] private GameObject panelNombre;
     [SerializeField] private TMP_InputField inputNombre;
     [SerializeField] private Button botonGuardar;

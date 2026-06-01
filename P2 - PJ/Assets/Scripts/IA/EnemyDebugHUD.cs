@@ -24,11 +24,11 @@ public class EnemyDebugHUD : MonoBehaviour
     {
         if (!showHUD || fuzzy == null) return;
 
-        float s     = fuzzy.SuspicionLevel;
-        float v     = fuzzy.VisionValue;
-        float r     = fuzzy.NoiseValue;
+        float s     = fuzzy.nivelSospecha;
+        float v     = fuzzy.valorVision;
+        float r     = fuzzy.sonidoVision;
         string label = fuzzy.GetSuspicionLabel();
-        string state = fsm.CurrentState.ToString();
+        string state = fsm.estadoActual.ToString();
 
         GUIStyle boxStyle = new GUIStyle(GUI.skin.box)   { fontSize = 13 };
         GUIStyle lblStyle = new GUIStyle(GUI.skin.label) { fontSize = 13 };

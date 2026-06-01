@@ -29,12 +29,12 @@ public class AnimacionJugar : MonoBehaviour
 
         while (t < 1f)
         {
-            t += Time.deltaTime / tiempo; // controla la duración total
+            t += Time.deltaTime / tiempo; // controla la duracion total
             camara.transform.position = Vector3.Lerp(inicio, destino, t);
             yield return null;
         }
 
-        camara.transform.position = destino; // asegurar posición final exacta
+        camara.transform.position = destino; // asegurar posicion final exacta
         
     }
 

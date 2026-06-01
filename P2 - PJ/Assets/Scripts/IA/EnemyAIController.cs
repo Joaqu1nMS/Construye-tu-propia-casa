@@ -31,32 +31,28 @@ public class EnemyAIController : MonoBehaviour
     [Header("Otros")]
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask puertaLayer;
-    [SerializeField] private AudioClip mmm;
-    [SerializeField] private AudioClip hey;
-    [SerializeField] private AudioClip pillado;    
+    [SerializeField] private AudioClip mmmAudio;
+    [SerializeField] private AudioClip heyAudio;
+    [SerializeField] private AudioClip pilladoAudio;    
 
-    // ── Private ────────────────────────────────────────────────────────────────
-    private NavMeshAgent agent;
+
+    private NavMeshAgent navMesh;
     private EnemySensor sensor;
     private EnemyFSM fsm;
     private FuzzyLogicController fuzzy;
 
     private int waypointIndex;
-    private bool isIdlingAtWaypoint;
+    private bool vaHaciaWaypoint;
 
-    private Vector3 lastKnownPosition;
-    private bool reachedLKP;
-    private float searchTimer;
-    private bool isLookingAround;
-
-    private Coroutine idleCoroutine;    
+    private Vector3 ultimaPosicionPlayer;
+    private bool llegoUltPosPlayer;     
 
     // Audio sources
     private AudioSource pitch1;    
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        navMesh = GetComponent<NavMeshAgent>();
         sensor = GetComponent<EnemySensor>();
         fsm = GetComponent<EnemyFSM>();
         fuzzy = GetComponent<FuzzyLogicController>();
@@ -65,47 +61,48 @@ public class EnemyAIController : MonoBehaviour
         List<AudioSource> audios = GetComponents<AudioSource>().ToList();
         pitch1 = audios[0];        
     }
-    //FSM Callbacks 
+    
     public void OnEnterState(EnemyFSM.EnemyState state)
     {
         StopAllCoroutines();
-        isIdlingAtWaypoint = false;
-        isLookingAround = false;
-        reachedLKP = false;
+        vaHaciaWaypoint = false;        
+        llegoUltPosPlayer = false;
 
-        Debug.Log($"Entrado a {state}");
+        //Debug.Log($"Entrado a {state}");
         switch (state)
         {
             case EnemyFSM.EnemyState.Patrol:
-                agent.speed = patrolSpeed;
+                navMesh.speed = patrolSpeed;
                 GoToNextWaypoint();
+
                 animator.SetBool("Walk", true);
                 animator.SetBool("Search", false);
                 break;
 
             case EnemyFSM.EnemyState.Investigate:
-                GameManager.gameM.ReproducirSonido(pitch1, mmm, -1);
-                agent.speed = investigateSpeed;
-                lastKnownPosition = sensor.GetPlayerPosition();
-                agent.SetDestination(lastKnownPosition);
+                GameManager.gameM.ReproducirSonido(pitch1, mmmAudio, -1);
+                navMesh.speed = investigateSpeed;
+                ultimaPosicionPlayer = sensor.GetPlayerPosition();
+                navMesh.SetDestination(ultimaPosicionPlayer);
+
                 animator.SetBool("Walk", true);
                 animator.SetBool("Search", false);
                 break;
 
             case EnemyFSM.EnemyState.Chase:
-            
-                if (fsm.PreviousState != EnemyFSM.EnemyState.Search) GameManager.gameM.ReproducirSonido(pitch1, hey, -1);
-                agent.speed = chaseSpeed;
+                if (fsm.estadoAnterior != EnemyFSM.EnemyState.Search) GameManager.gameM.ReproducirSonido(pitch1, heyAudio, -1);
+                navMesh.speed = chaseSpeed;
+
                 animator.SetBool("Walk", true);
                 animator.SetBool("Search", false);
                 break;
 
             case EnemyFSM.EnemyState.Search:
-                agent.speed = searchSpeed;
-                lastKnownPosition = sensor.GetPlayerPosition();
-                reachedLKP = false;
-                searchTimer = 0f;
-                agent.SetDestination(lastKnownPosition);
+                navMesh.speed = searchSpeed;
+                ultimaPosicionPlayer = sensor.GetPlayerPosition();
+                llegoUltPosPlayer = false;
+                
+                navMesh.SetDestination(ultimaPosicionPlayer);
                 animator.SetBool("Walk", false);
                 animator.SetBool("Search", true);
                 break;
@@ -128,50 +125,49 @@ public class EnemyAIController : MonoBehaviour
     // PATROL 
     private void ExecutePatrol()
     {
-        sensor.visionAngle = 50f; // visión omnidireccional durante búsqueda
+        sensor.anguloDeVision = 50f;
         sensor.peripheralAngle = 90f;
         if (waypoints == null || waypoints.Length == 0) return;
-        if (isIdlingAtWaypoint) return;
+        if (vaHaciaWaypoint) return;
 
-        if (HasReachedDestination())
+        if (HaLlegadoDestino())
         {
-            idleCoroutine = StartCoroutine(IdleAtWaypoint());
+            StartCoroutine(IdleAtWaypoint());
         }
     }
 
     private IEnumerator IdleAtWaypoint()
     {
-        isIdlingAtWaypoint = true;
-        agent.ResetPath();
+        vaHaciaWaypoint = true;
+        navMesh.ResetPath();
         yield return new WaitForSeconds(waypointIdleTime);
         GoToNextWaypoint();
-        isIdlingAtWaypoint = false;
+        vaHaciaWaypoint = false;
     }
 
     private void GoToNextWaypoint()
     {
         if (waypoints == null || waypoints.Length == 0) return;
         waypointIndex = (waypointIndex + 1) % waypoints.Length;
-        agent.SetDestination(waypoints[waypointIndex].position);
+        navMesh.SetDestination(waypoints[waypointIndex].position);
     }
 
     // INVESTIGATE 
     private void ExecuteInvestigate()
     {
-        sensor.visionAngle = 50f; // visión omnidireccional durante búsqueda
-        sensor.peripheralAngle = 90f;
-        if (isLookingAround) return;
+        sensor.anguloDeVision = 50f;
+        sensor.peripheralAngle = 90f;        
 
         float v = sensor.GetVisionValue();
         float r = sensor.GetNoiseValue();
         bool hasStimulus = v > 0f || r > 0.49f;
 
-        if (!HasReachedDestination())
+        if (!HaLlegadoDestino())
         {
             if (hasStimulus)
             {
-                lastKnownPosition = sensor.GetPlayerPosition();
-                agent.SetDestination(lastKnownPosition);
+                ultimaPosicionPlayer = sensor.GetPlayerPosition();
+                navMesh.SetDestination(ultimaPosicionPlayer);
             }
         }
         else
@@ -183,22 +179,22 @@ public class EnemyAIController : MonoBehaviour
     // CHASE 
     private void ExecuteChase()
     {
-        sensor.visionAngle = 50f; // visión omnidireccional durante búsqueda
+        sensor.anguloDeVision = 50f;
         sensor.peripheralAngle = 90f;
-        agent.SetDestination(sensor.GetPlayerPosition());
+        navMesh.SetDestination(sensor.GetPlayerPosition());
     }
 
     // SEARCH
     private void ExecuteSearch()
     {
-        sensor.visionAngle = 180f; // visión omnidireccional durante búsqueda
+        sensor.anguloDeVision = 180f;
         sensor.peripheralAngle = 180f;
 
-        if (!reachedLKP)
+        if (!llegoUltPosPlayer)
         {
-            if (HasReachedDestination())
+            if (HaLlegadoDestino())
             {
-                reachedLKP = true;
+                llegoUltPosPlayer = true;
                 StartCoroutine(RutinaSearch());
             }
         }
@@ -216,18 +212,18 @@ public class EnemyAIController : MonoBehaviour
             return;
         }
 
-        GameManager.gameM.ReproducirSonido(pitch1, pillado, -1);
+        GameManager.gameM.ReproducirSonido(pitch1, pilladoAudio, -1);
         FindObjectOfType<PlayerController>().isBlocked = true;
-        GetComponent<EnemyFSM>().isBlocked = true;        
-        agent.SetDestination(agent.transform.position); // Detener movimiento
+        fsm.isBlocked = true;
+        navMesh.SetDestination(navMesh.transform.position); // Detener movimiento
         StartCoroutine(GameManager.gameM.CambiarEscena(1, 1f));
     }
 
-    // ── Helpers ────────────────────────────────────────────────────────────────
-    private bool HasReachedDestination()
+    // HELPERS
+    private bool HaLlegadoDestino()
     {
-        if (agent.pathPending) return false;
-        return agent.remainingDistance <= arrivalThreshold;
+        if (navMesh.pathPending) return false;
+        return navMesh.remainingDistance <= arrivalThreshold;
     }
 
     private IEnumerator LookAround(float degrees, float totalDuration)
@@ -264,13 +260,13 @@ public class EnemyAIController : MonoBehaviour
         fsm.animacionSearch = false;
     }    
     
-    public void NotifyLoudNoise(Vector3 sourcePosition)
+    public void NotificarSonido(Vector3 sourcePosition)
     {
-        lastKnownPosition = sourcePosition;
-        if (fsm.CurrentState != EnemyFSM.EnemyState.Chase)
+        ultimaPosicionPlayer = sourcePosition;
+        if (fsm.estadoActual != EnemyFSM.EnemyState.Chase)
         {
-            Debug.Log("INVESTIGA POR RUIDO");
-            fuzzy.SetSuspicion(fsm.chaseThreshold-1);
+            //Debug.Log("INVESTIGA POR RUIDO");
+            fuzzy.SetSuspicion(fsm.umbralPerseguir-1);
             ExecuteInvestigate();
         }
         /*if (_fsm.CurrentState == EnemyFSM.EnemyState.Patrol ||

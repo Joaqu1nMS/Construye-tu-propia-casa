@@ -7,10 +7,10 @@ using TMPro;
 public class DoorInteraction : MonoBehaviour
 {
     [Header("Puerta")]
-    [Tooltip("Transform que rota (el gozne/bisagra). Suele ser el padre de este objeto.")]
+    [Tooltip("Transform que rota")]
     public Transform doorPivot;
 
-    [Tooltip("Collider de este mismo mesh. Se desactiva durante la animación.")]
+    [Tooltip("Collider de este mismo mesh. Se desactiva durante la animacion")]
     public Collider doorCollider;
 
     [Header("Label UI (World Space Canvas)")]
@@ -25,7 +25,7 @@ public class DoorInteraction : MonoBehaviour
     public GameObject player;
 
 
-    [Header("Animación")]
+    [Header("Animacion")]
     public float anguloCerrada = 0f;
     public float anguloAbierta = 130f;
     public float duracionAnim = 1.2f;
@@ -34,7 +34,6 @@ public class DoorInteraction : MonoBehaviour
     public AudioClip abrir;
     public AudioClip cerrar;
     public AudioSource audioSource;
-
 
     private Outline outline;
     private bool estaAbierta = false;
@@ -68,14 +67,14 @@ public class DoorInteraction : MonoBehaviour
         SetOutlineActivo(false);
     }
 
-    /// Cursor está sobre el Collider — detecto tecla E
+    /// Cursor esta sobre el Collider — detecto tecla E
     void OnMouseOver()
     {
         if (Time.timeScale == 0f) return;
 
         if (Vector3.Distance(player.transform.position, transform.position) > rango)
         {
-            // no muestro UI si el jugador está lejos, y si estaba mostrado, lo oculto
+            // no muestro UI si el jugador esta lejos, y si estaba mostrado, lo oculto
             SetLabelActivo(false);
             SetOutlineActivo(false);
             return;
@@ -136,7 +135,6 @@ public class DoorInteraction : MonoBehaviour
             yield return null;
         }
 
-
         // Posicion al terminar
         doorPivot.localRotation = rotFin;
 
@@ -161,11 +159,11 @@ public class DoorInteraction : MonoBehaviour
     {
         if (estaAbierta || estaAnimando)
         {
-            Debug.Log("VECINO NO ABRE PUERTA");
+            //Debug.Log("VECINO NO ABRE PUERTA");
             return;
         }
 
-        Debug.Log("VECINO ABRE PUERTA");
+        //Debug.Log("VECINO ABRE PUERTA");
         StartCoroutine(AnimarPuerta(anguloCerrada, anguloAbierta));
     }
 

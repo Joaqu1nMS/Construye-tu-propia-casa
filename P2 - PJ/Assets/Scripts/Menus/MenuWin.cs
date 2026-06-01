@@ -10,13 +10,12 @@ public class MenuWin : MonoBehaviour
     [SerializeField] private Button botonReintentar;
     [SerializeField] private Button botonMenuPrincipal;
 
-    [Header("Estadísticas")]
-    [Tooltip("Muestra cuántos objetos se robaron sobre el total.")]
+    [Header("Estadisticas")]
+    [Tooltip("Muestra cuantos objetos se robaron sobre el total.")]
     [SerializeField] private TextMeshProUGUI textoContador;
 
     private ObjectManager objectManager;
 
-    // ══════════════════════════════════════════════════════════
     void Start()
     {
         if (botonReintentar != null) botonReintentar.onClick.AddListener(Reintentar);
@@ -36,13 +35,13 @@ public class MenuWin : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        // Buscamos al jugador para bloquearlo y liberar el ratón
+        // Buscamos al jugador para bloquearlo y liberar el raton
         PlayerController player = FindObjectOfType<PlayerController>();
         if (player != null)
         {
             player.isBlocked = true; // Bloquea el movimiento en Update()
-            player.UnlockCursor();   // Libera el ratón para pulsar botones o escribir
-            player.crosshairRadius = 0f;
+            player.UnlockCursor();   // Libera el raton para pulsar botones o escribir
+            player.radioCrosshair = 0f;
         }
     }
 

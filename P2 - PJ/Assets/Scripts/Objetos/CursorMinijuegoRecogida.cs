@@ -11,12 +11,13 @@ public class CursorMinijuegoRecogida : MonoBehaviour
     private float posFin;
     private float posActual;
     private int direccion = 1;
+
     // Start is called before the first frame update
     void Start()
     {        
         mov = GetComponent<RectTransform>();        
 
-        Debug.Log($"{rTransformBarra.gameObject.name}: {rTransformBarra.rect.width / 2} | {mov.rect.width / 2f}");
+        //Debug.Log($"{rTransformBarra.gameObject.name}: {rTransformBarra.rect.width / 2} | {mov.rect.width / 2f}");
         Vector2 pos = mov.anchoredPosition;
 
         posIni = -rTransformBarra.rect.width / 2 + mov.rect.width / 2f;

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class FadeInOut : MonoBehaviour
 {
     [SerializeField] private CanvasGroup cg;
+    
     // Start is called before the first frame update
     void Start()
     {       

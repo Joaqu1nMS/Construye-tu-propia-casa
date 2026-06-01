@@ -5799,12 +5799,12 @@ MonoBehaviour:
   crouchSpeed: 2.5
   jumpForce: 5
   gravity: 20
-  mouseSensitivity: 2
+  sensibilidadRaton: 2
   maxLookAngle: 80
-  crosshairRadius: 4
-  crosshairColor: {r: 1, g: 1, b: 1, a: 1}
-  standHeight: 2
-  crouchHeight: 1
+  radioCrosshair: 4
+  colorCrosshair: {r: 1, g: 1, b: 1, a: 1}
+  alturaDepie: 2
+  alturaAgachado: 1
   crouchTransitionSpeed: 10
   paso: {fileID: 8300000, guid: 1ea17ff2480ecb04eb7f11f4d92c1fbf, type: 3}
   isBlocked: 0
@@ -13912,9 +13912,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489180aef84053540be75143cbc331bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  investigateThreshold: 40
-  chaseThreshold: 75
-  showDebugLogs: 1
+  umbralInvestigar: 20
+  umbralPerseguir: 75
   animacionSearch: 0
   isBlocked: 0
 --- !u!114 &1472210191
@@ -13929,11 +13928,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cafe4f3c69b4bfe46a2121fbf212ac8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  suspicionIncreaseRateVisually: 35
-  suspicionIncreaseRateHearing: 10
-  suspicionIncreaseRateLoud: 20
-  suspicionDecayRate: 15
-  searchDecayMultiplier: 0.2
+  incrementoSospechaPorVision: 35
+  incrementoSospechaPorSonido: 10
+  incrementoPorSonidoFuerte: 20
+  decaySospecha: 1
+  multDecaySearch: 0.2
 --- !u!114 &1472210192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13961,16 +13960,16 @@ MonoBehaviour:
   searchWaitTime: 5
   lookAroundDuration: 3
   arrivalThreshold: 0.6
-  animator: {fileID: 0}
+  animator: {fileID: 1472210195}
   playerLayer:
     serializedVersion: 2
     m_Bits: 2048
   puertaLayer:
     serializedVersion: 2
     m_Bits: 4096
-  mmm: {fileID: 8300000, guid: 729e7c63c1952904791baebdd44ef7b3, type: 3}
-  hey: {fileID: 8300000, guid: 48952ae8aad74d340a6fdb2832911f77, type: 3}
-  pillado: {fileID: 8300000, guid: d19244ed8e04dee45a69bc8ff0971f18, type: 3}
+  mmmAudio: {fileID: 8300000, guid: 729e7c63c1952904791baebdd44ef7b3, type: 3}
+  heyAudio: {fileID: 8300000, guid: 48952ae8aad74d340a6fdb2832911f77, type: 3}
+  pilladoAudio: {fileID: 8300000, guid: d19244ed8e04dee45a69bc8ff0971f18, type: 3}
 --- !u!114 &1472210193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13983,19 +13982,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e92dc5f95b3b11408e559b6f23db712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyePoint: {fileID: 1649071532}
-  visionRange: 15
-  visionAngle: 50
+  origenVision: {fileID: 0}
+  rangoDeVision: 20
+  anguloDeVision: 90
   peripheralFraction: 1
   peripheralAngle: 90
-  obstacleLayer:
+  layerObstaculo:
     serializedVersion: 2
     m_Bits: 1024
-  playerLayer:
+  layerPlayer:
     serializedVersion: 2
     m_Bits: 2048
-  hearingRadiusWalk: 5
-  hearingRadiusRun: 12
+  radioEscuchaWalk: 5
+  radioEscuchaRun: 10
   playerLayerHearing:
     serializedVersion: 2
     m_Bits: 2048

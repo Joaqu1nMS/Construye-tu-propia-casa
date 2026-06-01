@@ -3,106 +3,104 @@ using UnityEngine;
 [RequireComponent(typeof(EnemySensor))]
 public class FuzzyLogicController : MonoBehaviour
 {
-    [Header("Suspicion Rates (per second)")]
-    [SerializeField, Range(0f, 100f)] private float suspicionIncreaseRateVisually = 35f; 
-    [SerializeField, Range(0f, 100f)] private float suspicionIncreaseRateHearing  = 10f; 
-    [SerializeField, Range(0f, 100f)] private float suspicionIncreaseRateLoud     = 20f; 
-    [SerializeField, Range(0f, 100f)] private float suspicionDecayRate            = 1f; 
+    [Header("Variables de sospecha")]
+    [SerializeField, Range(0f, 100f)] private float incrementoSospechaPorVision = 35f; 
+    [SerializeField, Range(0f, 100f)] private float incrementoSospechaPorSonido = 10f; 
+    [SerializeField, Range(0f, 100f)] private float incrementoPorSonidoFuerte = 20f; 
+    [SerializeField, Range(0f, 100f)] private float decaySospecha = 1f; 
 
-    [Header("Suspicion Freeze")]
-    [Tooltip("In SEARCH state the decay is slowed to this fraction of the normal decay rate.")]
-    [SerializeField, Range(0f, 1f)] private float searchDecayMultiplier = 0.2f;
+    [Tooltip("Para manejar el decay en SEARCH")]
+    [SerializeField, Range(0f, 1f)] private float multDecaySearch = 0.2f;
 
-    public float SuspicionLevel { get; private set; }
+    public float nivelSospecha { get; private set; }
 
-    public float VisionValue { get; private set; }
+    public float valorVision { get; private set; }
 
-    public float NoiseValue { get; private set; }
+    public float sonidoVision { get; private set; }
 
-    private const float V_PARTIAL = 0.5f;
-    private const float V_CLEAR   = 1.0f;
-    private const float R_LIGHT   = 0.5f;
-    private const float R_LOUD    = 1.0f;
-    private const float EPSILON   = 0.01f;
+    private const float VISION_PARCIAL = 0.5f;
+    private const float VISION_CLARA   = 1.0f;
+    private const float SONIDO   = 0.5f;
+    private const float SONIDO_FUERTE    = 1.0f;
 
     private EnemySensor sensor;
-    private EnemyFSM    fsm;       
-    private bool        rule3Primed; 
+    private EnemyFSM fsm;       
+    private bool regla3; 
 
     private void Awake()
     {
         sensor = GetComponent<EnemySensor>();
-        fsm    = GetComponent<EnemyFSM>();
+        fsm = GetComponent<EnemyFSM>();
     }
 
     private void Update()
     {
         SampleInputs();
         ApplyFuzzyRules();
-        SuspicionLevel = Mathf.Clamp(SuspicionLevel, 0f, 100f);
+        nivelSospecha = Mathf.Clamp(nivelSospecha, 0f, 100f);
     }
 
     private void SampleInputs()
     {
-        VisionValue = sensor.GetVisionValue();
-        NoiseValue  = sensor.GetNoiseValue();
+        valorVision = sensor.GetVisionValue();
+        sonidoVision  = sensor.GetNoiseValue();
     }
 
     private void ApplyFuzzyRules()
     {
         float dt = Time.deltaTime;
 
-        if (Mathf.Approximately(VisionValue, V_CLEAR))
+        if (Mathf.Approximately(valorVision, VISION_CLARA))
         {
             //Debug.Log("TE HE VISTO");
-            SuspicionLevel = 100f;
-            rule3Primed   = false;
+            nivelSospecha = 100f;
+            regla3   = false;
             return;
         }
 
-        if (Mathf.Approximately(VisionValue, V_PARTIAL))
+        if (Mathf.Approximately(valorVision, VISION_PARCIAL))
         {
             //Debug.Log("Me parece haber visto algo");
-            SuspicionLevel += suspicionIncreaseRateVisually * dt;
-            rule3Primed    = false;
+            nivelSospecha += incrementoSospechaPorVision * dt;
+            regla3    = false;
             return;
         }
 
-        if (Mathf.Approximately(NoiseValue, R_LOUD))
+        if (Mathf.Approximately(sonidoVision, SONIDO_FUERTE))
         {
             //Debug.Log("SONIDO CERCA");
-            if (!rule3Primed || SuspicionLevel < 60f)
+            if (!regla3 || nivelSospecha < 60f)
             {
-                SuspicionLevel = Mathf.Max(SuspicionLevel, 60f);
-                rule3Primed   = true;
+                nivelSospecha = Mathf.Max(nivelSospecha, 60f);
+                regla3 = true;
             }
-            SuspicionLevel += suspicionIncreaseRateLoud * dt;
+            nivelSospecha += incrementoPorSonidoFuerte * dt;
             return;
         }
 
-        rule3Primed = false;
+        regla3 = false;
 
-        if (Mathf.Approximately(NoiseValue, R_LIGHT))
+        if (Mathf.Approximately(sonidoVision, SONIDO))
         {
             //Debug.Log("SONIDO LEJOS");
-            SuspicionLevel += suspicionIncreaseRateHearing * dt;
+            nivelSospecha += incrementoSospechaPorSonido * dt;
             return;
         }
 
         //Debug.Log("TODO EN ORDEN");
-        float decayMultiplier = (fsm != null && fsm.CurrentState == EnemyFSM.EnemyState.Search)
-            ? searchDecayMultiplier
+        float decayMultiplier = (fsm != null && fsm.estadoActual == EnemyFSM.EnemyState.Search)
+            ? multDecaySearch
             : 1f;
 
-        SuspicionLevel -= suspicionDecayRate * decayMultiplier * dt;
+        nivelSospecha -= decaySospecha * decayMultiplier * dt;
     }
 
-    public void SetSuspicion(float value) => SuspicionLevel = Mathf.Clamp(value, 0f, 100f);
+    public void SetSuspicion(float value) => nivelSospecha = Mathf.Clamp(value, 0f, 100f);
 
     public string GetSuspicionLabel()
     {
-        if (SuspicionLevel < 40f) return "LOW";
-        if (SuspicionLevel < 75f) return "MEDIUM";
+        if (nivelSospecha < 40f) return "LOW";
+        if (nivelSospecha < 75f) return "MEDIUM";
         return "HIGH";
     }
 }

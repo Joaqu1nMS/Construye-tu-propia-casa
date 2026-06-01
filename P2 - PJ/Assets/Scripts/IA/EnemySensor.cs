@@ -3,18 +3,17 @@ using UnityEngine;
 public class EnemySensor : MonoBehaviour
 {
     [Header("Vision")]
-    [SerializeField] private Transform eyePoint;
-    [SerializeField, Range(1f, 50f)] public float visionRange = 20f;
-    [SerializeField, Range(10f, 180f)] public float visionAngle = 90f;
+    [SerializeField] private Transform origenVision;
+    [SerializeField, Range(1f, 50f)] public float rangoDeVision = 20f;
+    [SerializeField, Range(10f, 180f)] public float anguloDeVision = 90f;
     [SerializeField, Range(0f, 1f)] private float peripheralFraction = 0.5f;
-    [Tooltip("Recomendado 0.5.")]
     [SerializeField, Range(0f, 180f)] public float peripheralAngle = 60f;
-    [SerializeField] private LayerMask obstacleLayer;
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask layerObstaculo;
+    [SerializeField] private LayerMask layerPlayer;
 
     [Header("Hearing")]
-    [SerializeField] public float hearingRadiusWalk = 5f;
-    [SerializeField] public float hearingRadiusRun = 10f;
+    [SerializeField] public float radioEscuchaWalk = 5f;
+    [SerializeField] public float radioEscuchaRun = 10f;
     [Tooltip("Layer mask for the player object.")]
     [SerializeField] private LayerMask playerLayerHearing;
 
@@ -23,11 +22,11 @@ public class EnemySensor : MonoBehaviour
     private Transform playerTransform;
     private PlayerController playerController; 
 
-    public float LastVisionValue { get; private set; }
-    public float LastNoiseValue { get; private set; }
+    public float ultimaVision { get; private set; }
+    public float ultimaEscucha { get; private set; }
     private void Awake()
     {
-        if (eyePoint == null) eyePoint = transform;
+        if (origenVision == null) origenVision = transform;
 
         GameObject player = FindObjectOfType<PlayerController>().gameObject;
         if (player != null)
@@ -35,22 +34,22 @@ public class EnemySensor : MonoBehaviour
             playerTransform = player.transform;
             playerController = player.GetComponent<PlayerController>();
         }
-        else
+        /*else
         {
-            Debug.LogWarning("[EnemySensor] No GameObject with tag 'Player' found.");
-        }
+            Debug.LogWarning("PLAYER NO ENCONTRADO");
+        }*/
     }
 
     public float GetVisionValue()
     {
-        LastVisionValue = ComputeVision();
-        return LastVisionValue;
+        ultimaVision = ComputeVision();
+        return ultimaVision;
     }
 
     public float GetNoiseValue()
     {
-        LastNoiseValue = ComputeNoise();
-        return LastNoiseValue;
+        ultimaEscucha = ComputeNoise();
+        return ultimaEscucha;
     }
 
     public Vector3 GetPlayerPosition() =>
@@ -63,18 +62,18 @@ public class EnemySensor : MonoBehaviour
             return 0f;
         }
 
-        Vector3 toPlayer = playerTransform.position - eyePoint.position;
+        Vector3 toPlayer = playerTransform.position - origenVision.position;
         float distance = toPlayer.magnitude;
 
-        if (distance > visionRange)
+        if (distance > rangoDeVision)
         {
             //Debug.Log("0 por estar muy lejos");
             return 0f;
         }
 
-        float angle = Vector3.Angle(eyePoint.forward, toPlayer);
+        float angle = Vector3.Angle(origenVision.forward, toPlayer);
 
-        if (angle > visionAngle * 0.5f)
+        if (angle > anguloDeVision * 0.5f)
         {
             //Debug.Log("0 por estar fuera del fov");
             return 0f;
@@ -92,7 +91,7 @@ public class EnemySensor : MonoBehaviour
             return 0.5f;
         }
 
-        if (distance > visionRange * peripheralFraction)
+        if (distance > rangoDeVision * peripheralFraction)
         {
             //Debug.Log("0.5 estas lejos");
             return 0.5f;
@@ -104,11 +103,11 @@ public class EnemySensor : MonoBehaviour
 
     private bool HasLineOfSight(Vector3 toPlayer, float distance)
     {
-        Ray ray = new Ray(eyePoint.position, toPlayer.normalized);
-        return !Physics.Raycast(ray, distance, obstacleLayer);
+        Ray ray = new Ray(origenVision.position, toPlayer.normalized);
+        return !Physics.Raycast(ray, distance, layerObstaculo);
     }
 
-    // ── Noise Computation ──────────────────────────────────────────────────────
+    // Calcular sonido
     private float ComputeNoise()
     {
         if (playerTransform == null) return 0f;
@@ -116,7 +115,7 @@ public class EnemySensor : MonoBehaviour
         float dist = Vector3.Distance(transform.position, playerTransform.position);
 
         PlayerController.MoveState moveState = playerController != null
-            ? playerController.CurrentMoveState
+            ? playerController.estadoPlayer
             : PlayerController.MoveState.Idle;
 
         if (moveState == PlayerController.MoveState.Idle ||
@@ -125,14 +124,14 @@ public class EnemySensor : MonoBehaviour
 
         if (moveState == PlayerController.MoveState.Run)
         {
-            if (dist <= hearingRadiusWalk) return 1f;  
-            if (dist <= hearingRadiusRun) return 1f;   
+            if (dist <= radioEscuchaWalk) return 1f;  
+            if (dist <= radioEscuchaRun) return 1f;   
             return 0f;
         }
 
         if (moveState == PlayerController.MoveState.Walk)
         {
-            if (dist <= hearingRadiusWalk) return 0.5f; 
+            if (dist <= radioEscuchaWalk) return 0.5f; 
             return 0f;
         }
 
@@ -143,18 +142,18 @@ public class EnemySensor : MonoBehaviour
     {
         if (!drawGizmos) return;
 
-        Transform origin = eyePoint != null ? eyePoint : transform;
+        Transform origin = origenVision != null ? origenVision : transform;
 
         Gizmos.color = Color.yellow;
-        DrawCone(origin, visionRange, visionAngle);
+        DrawCone(origin, rangoDeVision, anguloDeVision);
 
         Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f);
-        DrawCone(origin, visionRange, peripheralAngle);
+        DrawCone(origin, rangoDeVision, peripheralAngle);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, hearingRadiusWalk);
+        Gizmos.DrawWireSphere(transform.position, radioEscuchaWalk);
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, hearingRadiusRun);
+        Gizmos.DrawWireSphere(transform.position, radioEscuchaRun);
     }
 
     private void DrawCone(Transform origin, float range, float angle)

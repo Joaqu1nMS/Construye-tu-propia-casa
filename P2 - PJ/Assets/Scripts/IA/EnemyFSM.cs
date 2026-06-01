@@ -7,20 +7,17 @@ using UnityEngine;
 [RequireComponent(typeof(FuzzyLogicController))]
 public partial class EnemyFSM : MonoBehaviour
 {
-    public enum EnemyState { Patrol, Investigate, Chase, Search, Caught }
+    public enum EnemyState { Patrol, Investigate, Chase, Search }
 
     // Inspector
-    [Header("State Thresholds")]
-    [SerializeField, Range(0f, 100f)] public float investigateThreshold = 20f;
-    [SerializeField, Range(0f, 100f)] public float chaseThreshold = 75f;
+    [Header("Umbrales de estado")]
+    [SerializeField, Range(0f, 100f)] public float umbralInvestigar = 20f;
+    [SerializeField, Range(0f, 100f)] public float umbralPerseguir = 75f;
 
-    [Header("Debug")]
-    [SerializeField] private bool showDebugLogs = false;
-
-    // State Accessors
-    public EnemyState CurrentState  { get; private set; } = EnemyState.Patrol;
-    public EnemyState PreviousState { get; private set; } = EnemyState.Patrol;
-    private EnemyAIController  controller;
+    // Estados
+    public EnemyState estadoActual  { get; private set; } = EnemyState.Patrol;
+    public EnemyState estadoAnterior { get; private set; } = EnemyState.Patrol;
+    private EnemyAIController controller;
     private FuzzyLogicController fuzzy;
 
     private float chaseCooldown; 
@@ -30,7 +27,7 @@ public partial class EnemyFSM : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<EnemyAIController>();
-        fuzzy      = GetComponent<FuzzyLogicController>();        
+        fuzzy = GetComponent<FuzzyLogicController>();        
     }
 
     private void Start() => EnterState(EnemyState.Patrol);
@@ -45,65 +42,67 @@ public partial class EnemyFSM : MonoBehaviour
         }
         
         EvaluateTransitions();
-        controller.ExecuteState(CurrentState);
-        Debug.Log(CurrentState);
+        controller.ExecuteState(estadoActual);
+        Debug.Log(estadoActual);
     }
 
-    // Transition Logic 
+    // Transiciones 
     private void EvaluateTransitions()
     {
-        float s = fuzzy.SuspicionLevel;
-        bool  hasLOS = fuzzy.VisionValue >= 1f;
+        float s = fuzzy.nivelSospecha;
+        bool  hasLOS = fuzzy.valorVision >= 1f;
 
-        switch (CurrentState)
+        switch (estadoActual)
         {
             case EnemyState.Patrol:
-                if      (s >= chaseThreshold)       TransitionTo(EnemyState.Chase);
-                else if (s >= investigateThreshold)  TransitionTo(EnemyState.Investigate);
+                if (s >= umbralPerseguir) TransitionTo(EnemyState.Chase);
+                else if (s >= umbralInvestigar) TransitionTo(EnemyState.Investigate);
                 break;
 
             case EnemyState.Investigate:
-                if      (s >= chaseThreshold)        TransitionTo(EnemyState.Chase);
-                else if (s < investigateThreshold)   TransitionTo(EnemyState.Patrol);
+                if (s >= umbralPerseguir) TransitionTo(EnemyState.Chase);
+                else if (s < umbralInvestigar) TransitionTo(EnemyState.Patrol);
                 break;
 
             case EnemyState.Chase:
-                if (!hasLOS && chaseCooldown <= 0f){
+                if (!hasLOS && chaseCooldown <= 0f)
+                {
                     //Debug.Log("Cooldown reset");
                     chaseCooldown = 3f;
                 }
                 
-                if(chaseCooldown > 0f){ 
+                if(chaseCooldown > 0f)
+                { 
                     //Debug.Log("Perdí visión, iniciando cooldown de persecución...");
                     chaseCooldown -= 1f * Time.deltaTime;
-                    if(chaseCooldown <= 0f){
+                    if(chaseCooldown <= 0f)
+                    {
                         //Debug.Log("Cooldown terminado, perdiendo al jugador.");
                         TransitionTo(EnemyState.Search);
                     }
                 }
-                
                 break;
 
             case EnemyState.Search:
                 if (hasLOS)
                 {
-                    Debug.Log("JUGADOR VISTO.");
+                    //Debug.Log("JUGADOR VISTO.");
                     fuzzy.SetSuspicion(100f);
                     TransitionTo(EnemyState.Chase);
                 }
-                else if (s < chaseThreshold && s > investigateThreshold) TransitionTo(EnemyState.Investigate);
-                else if (s < chaseThreshold && !animacionSearch) TransitionTo(EnemyState.Patrol);
+                else if (s < umbralPerseguir && s > umbralInvestigar) TransitionTo(EnemyState.Investigate);
+                else if (s < umbralPerseguir && !animacionSearch) TransitionTo(EnemyState.Patrol);
                 break;
         }
     }
 
     private void TransitionTo(EnemyState next)
     {
-        if (next == CurrentState) return;
+        if (next == estadoActual) return;
 
-        ExitState(CurrentState);
-        PreviousState = CurrentState;
-        CurrentState  = next;        
+        ExitState(estadoActual);
+        estadoAnterior = estadoActual;
+        estadoActual  = next;        
         EnterState(next);
 
         /*if (showDebugLogs)
@@ -119,7 +118,7 @@ public partial class EnemyFSM
 {
     void OnDrawGizmos()
     {
-        if (Application.isPlaying) Handles.Label(transform.position + Vector3.up * 3, $"Sospecha: {fuzzy.SuspicionLevel}");
+        if (Application.isPlaying) Handles.Label(transform.position + Vector3.up * 3, $"Sospecha: {fuzzy.nivelSospecha}");
     }
 }
 # endif

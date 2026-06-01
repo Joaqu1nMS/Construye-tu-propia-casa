@@ -129,7 +129,7 @@ public class MenuOpciones : MonoBehaviour
         dropdownPantalla.value = modoPantalla;
         CambiarModoPantalla(modoPantalla); // Lo aplicamos directamente
 
-        // (La resolución ya se carga y aplica dentro de ConfigurarResolucion)
+        // (La resolucion ya se carga y aplica dentro de ConfigurarResolucion)
         
         // Forzamos un guardado manual por seguridad
         PlayerPrefs.Save(); 
