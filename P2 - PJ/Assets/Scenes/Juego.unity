@@ -13982,7 +13982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e92dc5f95b3b11408e559b6f23db712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origenVision: {fileID: 0}
+  origenVision: {fileID: 1649071532}
   rangoDeVision: 20
   anguloDeVision: 90
   peripheralFraction: 1
